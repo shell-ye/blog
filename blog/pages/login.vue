@@ -69,18 +69,27 @@ export default {
                         this.$refs.sendEmail.innerHTML = '发送'
                     }
                 },1000)
-            } else {
-                alert( result.data.msg )
+                this.$message({
+                    type: 'success',
+                    message: '验证码已发送'
+                })
             }
         },
         async register () {
-            if ( !this.email || !this.password ) { 
+            if ( !this.email || !this.password || !this.emailms ) { 
                 this.$message({
                     type: 'error',
                     message: '请将信息输入完整'
                 })
             } else {
-                let result = await user_register( this.email,this.password )
+                let result = await user_register( this.email,this.emailms,this.password )
+                if ( result.data.code == 200 ) {
+                    this.$message({
+                        type: 'success',
+                        message: '注册成功'
+                    })
+                    this.loginBool = true
+                }
             }
         },
         async login () {
@@ -106,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/common.css';
+@import '@/assets/css/common.scss';
 @import '@/assets/css/theme.scss';
 #login{
     width: 100%;

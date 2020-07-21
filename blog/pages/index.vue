@@ -1,14 +1,14 @@
 <template>
   <article id="index">
     <section class="big-title">
-      <p class="animate__animated animate__backInUp">全栈开发,奥里给干了!</p>
+      <p class="animate__animated animate__zoomInDown">全栈开发,奥里给干了!</p>
     </section>
-    <section class="learning container white-card">
-      <p><i class="iconfont iconshuben"></i>最近在学</p>
+    <section class="animate__animated animate__slideInUp learning container white-card">
+      <p class="title"><i class="iconfont iconshuben"></i>最近在学</p>
       <div class="tags">
-        <a class="tags_1">Nuxt.js</a>
-        <a class="tags_1">Node.js</a>
-        <a class="tags_1">Webpack</a>
+        <span class="tags-1">Nuxt.js</span>
+        <span class="tags-1">Node.js</span>
+        <span class="tags-1">Webpack</span>
       </div>
       <span class="learning-words">懒惰象生锈一样,比操劳更能消耗身体;经常用的钥匙,总是亮闪闪的</span>
     </section>
@@ -28,7 +28,7 @@ export default {
   color: white;
   section.big-title{
     color: white;
-    background: $redBG;
+    background: $themeBG;
     text-align: center;
     font-size: 60px;
     letter-spacing: 10px;
@@ -38,29 +38,9 @@ export default {
     justify-content: center;
   }
   section.learning{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    color: black;
-    transform: translateY(-40px);
-    position: relative;
-    min-height: 360px;
-    p{
-      width: 100%;
-      text-align: center;
-      font-size: 32px;
-      letter-spacing: 4px;
-      margin-top: 40px;
-      i{
-        font-size: 32px;
-        font-weight: bold;
-        margin-right: 10px;
-      }
-    }
+    margin-top: -40px;
     div.tags{
       margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
     }
     > span.learning-words{ 
       color: $gray;
@@ -75,5 +55,6 @@ export default {
   }
 }
 
-.animate__backInUp{ animation-delay: .5s;}
+.animate__zoomInDown{ animation-delay: .5s;}
+.animate__slideInUp{ animation-delay: 1s;}
 </style>

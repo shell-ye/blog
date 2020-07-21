@@ -1,25 +1,39 @@
 <template>
     <main id="main" ref="main">
         <Nav></Nav>
-        <Nuxt />
+        <keep-alive>
+            <Nuxt />
+        </keep-alive>
+        <!-- <MusicPlayer></MusicPlayer> -->
+        <!-- <Footer></Footer> -->
     </main>
 </template>
 
 <script>
 import Nav from '@/components/nav.vue'
+import Footer from '@/components/footer.vue'
+import MusicPlayer from '@/components/music.vue'
+import { setCookie } from '@/utils/cookie'
+import { getToken,user_info } from '@/axios/user'
 export default {
-    // mounted () {
-    //     document.querySelector('#main').onmouseenter = () => {
-    //         this.$refs.main.style.cursor = 'url(/static/logo.png),auto'
-    //         console.log(123,this.$refs.main)
-    //     }
-    // }
+    async mounted () {
+        let token = await getToken()
+        if ( token.data.code == 200 ) {
+            setCookie('token', token.data.data)
+            this.$store.commit('setToken', token.data.data)
+            let info = await user_info()
+            this.$store.commit('setUserData',info.data.data)
+        }
+    },
+    components: {
+        Nav,Footer,MusicPlayer
+    }
 }
 </script>
 
 <style lang="scss">
 @import '@/assets/css/reset.css';
-@import '@/assets/css/common.css';
+@import '@/assets/css/common.scss';
 @import '@/assets/css/theme.scss';
 // main{ cursor: pointer;}
 </style>
