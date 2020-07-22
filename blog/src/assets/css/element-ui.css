@@ -1,0 +1,8 @@
+.el-dialog{ font-size: 16px; width: 600px;}
+.el-dialog__body{ padding: 0;}
+.el-dialog__footer{ text-align: left;}
+.el-dialog__footer .btn-list{ display: flex; justify-content: flex-end;}
+.el-input--medium{ width: 300px;}
+.el-checkbox,.el-radio{ margin-right: 0; background: white;}
+.el-pagination ul{ display: flex; align-items: center;}
+.el-input-number{ min-width: 100px!important;}

@@ -19,26 +19,37 @@ router.post('/add', token_verification, (req, res) => {
 })
 
 router.get('/list', token_verification, (req, res) => {
-    const { article_class } = req.query
-    if ( article_class ) {
-        pool.query(`select * from article where article_class = '${ article_class }'`, (err, data) => {
-            if ( err ) {
-                console.log( err )
-                res.send({ code: '000021', msg: '系统繁忙'})
-            } else {
-                res.send({ code: 200, data})
-            }
-        })
-    } else {
-        pool.query('select * from article', (err, data) => {
-            if ( err ) {
-                console.log( err )
-                res.send({ code: '000021', msg: '系统繁忙'})
-            } else {
-                res.send({ code: 200, data})
-            }
-        })
+    let query = ''
+    let count_query = ''
+    let count = 0
+    const { type,pages,page_count,article_class } = req.query
+    if ( !type || !pages || !page_count ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    if ( type == 1 ) {
+        count_query = 'select count(*) from article'
+    } else if ( type == 2 ) {
+        count_query = `select count(*) from article where article_class = '${ article_class }'`
     }
+    pool.query(count_query, (err, data) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            count = data[0]['count(*)']
+        }
+    })
+    if ( type == 1 ) {
+        query = `select * from article limit ${ ( pages - 1 ) * page_count },${ page_count }`
+    } else if ( type == 2 ) {
+        query = `select * from article where article_class = '${ article_class }' limit ${ ( pages - 1 ) * page_count },${ page_count }`
+    }
+    pool.query(query, (err, datas) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            res.send({ code: 200, data: datas, pages_info: { count,pages}})
+        }
+    })
 })
 
 router.get('/del', token_verification, (req, res) => {
@@ -90,6 +101,12 @@ router.post('/update', token_verification, (req, res) => {
         } else {
             res.send({ code: 200, data: 'ok'})
         } 
+    })
+})
+
+router.get('/test', (req, res) => {
+    pool.query('select count(*) from article', (err, data) => {
+        res.send({data: data[0]['count(*)']})
     })
 })
 

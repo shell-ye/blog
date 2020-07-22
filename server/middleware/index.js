@@ -1,13 +1,26 @@
+const { checkToken } = require('./../utils/jwt')
+
 const token_verification = (req, res, next) => {
     for ( let prop in req.route.methods ) {
         if ( prop == 'post' ) {
             const { token } = req.body
-            if ( !token || token != req.session.token ) { return res.send({ code: '000013', msg: '无效的 token'})}
+            checkToken(token).then(data => {
+                next()
+            }).catch(err => {
+                console.log('post-token:',token)
+                console.log('server-token:',req.session.token)
+                res.send({ code: '000013', msg: '无效的 token'})
+            })
         } else {
             const { token } = req.query
-            if ( !token || token != req.session.token ) { return res.send({ code: '000013', msg: '无效的 token'})}
+            checkToken(token).then(data => {
+                next()
+            }).catch(err => {
+                console.log('get-token:',token)
+                console.log('server-token:',req.session.token)
+                res.send({ code: '000013', msg: '无效的 token'})
+            })
         }
-        next()
     }
 }
 

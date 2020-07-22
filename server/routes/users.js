@@ -2,17 +2,17 @@ var express = require('express');
 var router = express.Router();
 const pool = require('./../mysql/pool')
 const { sandEmail } = require('./../utils/email');
-const { Token } = require('./../utils/token');
 const multer  = require('multer')
-const { token_verification } = require('./../middleware/index')
+const { token_verification } = require("./../middleware/index")
+const { createToken } = require('./../utils/jwt')
 
 let storage = multer.diskStorage({
-  destination (req, res, cb) {
+  destination (req, file, cb) {
     cb(null, './public/images/')
   },
-  filename (req, res, cb) {
-    let exts = res.originalname.split('.')
-    let ext = res.originalname.split('.')[exts.length - 1]
+  filename (req, file, cb) {
+    let exts = file.originalname.split('.')
+    let ext = file.originalname.split('.')[exts.length - 1]
     cb(null, `${ req.session.email }.${ ext }`)
   }
 })
@@ -23,7 +23,7 @@ let upload = multer({
 /* GET users listing. */
 router.get('/token', (req, res) => {
   if ( req.session.token ) { return res.send({code: '200', data: req.session.token}) }
-  let token = Token.createToken()
+  let token = createToken({ name: 'xiaye', saying: 'Hello,welcome to my blog'})
   req.session.token = token
   res.send({code: '200', data: token})
 })
@@ -75,11 +75,10 @@ router.post('/register', (req, res) => {
 })
 
 // 登录
-router.post('/login', (req, res) => {
+router.post('/login', token_verification, (req, res) => {
   const { email,password,token } = req.body
   if ( !email ) { return res.send({ code: '000010', msg: '请输入邮箱' }) }
   if ( !password ) { return res.send({ code: '000011', msg: '请输入密码' }) }
-  if ( !token ) { return res.send({ code: '000013', msg: '无效的 token', token: req.session.token }) }
   req.session.email = email
   req.session.token = token
   pool.query(`select * from user where email = '${ email }'`, (err, data) => {
@@ -100,8 +99,7 @@ router.post('/login', (req, res) => {
 
 // 用户信息
 router.get('/info', (req, res) => {
-  const { token } = req.query
-  if ( !token || token != req.session.token ) { return res.send({ code: '200', data:{} }) }
+  if ( !req.query.token || req.query.token != req.session.token ) { return res.send({ code: 200, data: {}}) }
   pool.query(`select * from user where email = '${ req.session.email }'`, (err, data) => {
     if ( err ) {
       console.log( err )

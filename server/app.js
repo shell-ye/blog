@@ -25,7 +25,7 @@ app.use(cookieSession({
   keys: ['123456'],
 
   // Cookie Options
-  maxAge: 60 * 60 * 1000
+  maxAge: 24 * 60 * 60 * 60 * 1000
 }))
 
 // 处理跨域请求
