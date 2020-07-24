@@ -9,6 +9,7 @@ const token_verification = (req, res, next) => {
             }).catch(err => {
                 console.log('post-token:',token)
                 console.log('server-token:',req.session.token)
+                req.session = null
                 res.send({ code: '000013', msg: '无效的 token'})
             })
         } else {
@@ -18,6 +19,7 @@ const token_verification = (req, res, next) => {
             }).catch(err => {
                 console.log('get-token:',token)
                 console.log('server-token:',req.session.token)
+                req.session = null
                 res.send({ code: '000013', msg: '无效的 token'})
             })
         }

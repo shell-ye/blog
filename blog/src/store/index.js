@@ -21,6 +21,10 @@ const store = new Vuex.Store({
         },
         changeArticleID ( state, data ) {
             state.article_id = data
+        },
+        logout ( state ) {
+            state.token = ''
+            state.userData = {}
         }
     },
     actions: {

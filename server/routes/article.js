@@ -5,10 +5,10 @@ const { Timestamp_To_YYYY_MM_DD_HH_MM_SS } = require('./../utils/time')
 const { token_verification } = require('./../middleware/index')
 
 router.post('/add', token_verification, (req, res) => {
-    const { title,article_class,article_tags,skill_tag,content,html_content } = req.body
-    if ( !title || !article_class || !article_tags || !skill_tag || !content || !html_content ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    const { title,article_class,article_tags,skill_tag,content,html_content,catalog } = req.body
+    if ( !title || !article_class || !article_tags || !skill_tag || !content || !html_content || !catalog ) { return res.send({ code: '000020', msg: '缺少参数'}) }
     let start_time = Timestamp_To_YYYY_MM_DD_HH_MM_SS( new Date() )
-    pool.query(`insert into article(title,article_class,article_tags,skill_tag,content,html_content,publish_time,update_time) value('${ title }','${ article_class }','${ article_tags }','${ skill_tag }','${ content }','${ html_content }','${ start_time }','${ start_time }')`, (err, data) => {
+    pool.query(`insert into article(title,article_class,article_tags,skill_tag,content,html_content,publish_time,update_time,catalog) value('${ title }','${ article_class }','${ article_tags }','${ skill_tag }','${ content }','${ html_content }','${ start_time }','${ start_time }','${ catalog }')`, (err, data) => {
         if ( err ) {
             console.log( err )
             res.send({ code: '000021', msg: '系统繁忙'})
@@ -38,9 +38,9 @@ router.get('/list', token_verification, (req, res) => {
         }
     })
     if ( type == 1 ) {
-        query = `select * from article limit ${ ( pages - 1 ) * page_count },${ page_count }`
+        query = `select * from article order by update_time desc limit ${ ( pages - 1 ) * page_count },${ page_count }`
     } else if ( type == 2 ) {
-        query = `select * from article where article_class = '${ article_class }' limit ${ ( pages - 1 ) * page_count },${ page_count }`
+        query = `select * from article where article_class = '${ article_class }' order by update_time desc limit ${ ( pages - 1 ) * page_count },${ page_count }`
     }
     pool.query(query, (err, datas) => {
         if ( err ) {
@@ -101,6 +101,105 @@ router.post('/update', token_verification, (req, res) => {
         } else {
             res.send({ code: 200, data: 'ok'})
         } 
+    })
+})
+
+router.get('/catalog', (req, res) => {
+    const { article_class } = req.query
+    if ( !article_class ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    pool.query('select title,id from article order by catalog asc', (err, data) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            res.send({ code: 200, data})
+        }
+    })
+})
+
+router.get('/catalog/max', (req, res) => {
+    const { article_class } = req.query
+    if ( !article_class ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    pool.query(`select max(catalog) from article where catalog <> 10000000 and article_class = '${ article_class }'`, (err, data) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            res.send({ code: 200, data: data[0]['max(catalog)']})
+        }
+    })
+})
+
+router.get('/like', (req, res) => {
+    let likes = 0
+    let query = ''
+    const { type,user_id,article_id,bool } = req.query
+    if ( !type || !article_id || !bool ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    pool.query(`select likes_count from article where id = '${ article_id }'`, (err, data) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            likes = data[0]['likes_count']
+            if ( bool == 'true' ) {
+                likes++
+            } else {
+                likes = likes == 0 ? 0 : ( likes - 1 )
+            }
+            pool.query(`update article set likes_count = ${ likes } where id = '${ article_id }'`,(err, data) => {
+                if ( err ) {
+                    console.log( err )
+                    res.send({ code: '000021', msg: '系统繁忙'})
+                } else {
+                    if ( type == 2 ) {
+                        if ( bool == 'true' ) {
+                            query = `insert into article_likes(article_id,user_id) value('${ article_id }','${ user_id }')`
+                        } else {
+                            query = `delete from article_likes where article_id = '${ article_id }' and user_id = '${ user_id }'`
+                        }
+                        pool.query(query,(err, data) => {
+                            if ( err ) {
+                                console.log( err )
+                                res.send({ code: '000021', msg: '系统繁忙'})
+                            } else {
+                                res.send({ code: 200, data: likes})
+                            }
+                        })
+                    } else {
+                        res.send({ code: 200, data: likes})
+                    }
+                }
+            })
+        }
+    })
+})
+
+router.get('/user-like', token_verification, (req, res) => {
+    const { type,user_id,article_id } = req.query
+    if ( !type || !user_id ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    let query = type == 1 ? `select * from article_likes where user_id = '${ user_id }'` : `select * from article_likes where user_id = '${ user_id }' and article_id = '${ article_id }'`
+    pool.query(query, (err, data) => {
+        if ( err ) {
+            console.log( err )
+            res.send({ code: '000021', msg: '系统繁忙'})
+        } else {
+            if ( type == 1 ) {
+                let arr = []
+                for ( let prop in data ) {
+                    arr.push(data[prop].article_id.toString())
+                }
+                pool.query(`select title,id from article where id in (${ arr.toString() })`,(err, data) => {
+                    if ( err ) {
+                        console.log( err )
+                        res.send({ code: '000021', msg: '系统繁忙'})
+                    } else {
+                        res.send({ code: 200, data})
+                    }
+                })
+            } else {
+                res.send({ code: 200, data})
+            }
+        }
     })
 })
 

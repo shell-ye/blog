@@ -1,6 +1,7 @@
 import { Message } from 'element-ui'
 import { getCookie,setCookie } from '@/utils/cookie'
 import { getToken } from './user'
+import store from '@/store'
 const config = require('./../../../config.json')
 const baseURL = config.server_URL
 
@@ -101,9 +102,13 @@ const request = ({
           duration: 1500
         })
         if ( res.data.code == '000013' ) {
+          store.commit('logout')
+          console.log( store )
           let result = await getToken()
           if ( result.data.code == 200 ) {
+            store.commit('setToken', result.data.data)
             setCookie('token', result.data.data)
+            window.location.href = '/login'
           }
         }
       }

@@ -25,8 +25,8 @@
     <div class="mark user-card">
       <p class="title">我的足迹</p>
       <div class="count">
-        <p><span>点赞数</span><i class="iconfont iconzan1"></i><span>{{ userData.likes }}个</span></p>
-        <p><span>博客足迹</span><i class="iconfont iconzuji"></i><span>{{ userData.looked }}条</span></p>
+        <p><span>点赞数</span><i class="iconfont iconzan1"></i><span v-if="likes">{{ likes.length }}个</span></p>
+        <p><span>浏览次数</span><i class="iconfont iconzuji"></i><span>{{ userData.looked }}条</span></p>
       </div>
     </div>
 
@@ -34,6 +34,9 @@
     <div class="list">
       <div class="likes user-card">
         <p class="title">我的点赞<i class="iconfont iconzan1"></i></p>
+        <ul>
+          <li v-for="(item,index) in likes" :key="index">{{ item.title }}</li>
+        </ul>
       </div>
       <div class="friends user-card">
         <p class="title">我的好友<i class="iconfont iconfriend"></i></p>
@@ -61,6 +64,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { article_user_like } from '@/axios/article'
 import { upload_head_img,update_user_info } from '@/axios/user'
 const config = require('./../../../../config.json')
 export default {
@@ -75,8 +79,9 @@ export default {
           qq: '',
           git: '',
           weibo: '',
-          bilibili: ''
-        }
+          bilibili: '',
+        },
+        likes: []
       }
     },
     watch: {
@@ -87,6 +92,9 @@ export default {
     mounted () {
       this.upload_addr = config.server_URL + '/upload/heads'
       this.changeInfo()
+    },
+    activated () {
+      this.likeList()
     },
     computed: {
       ...mapState(['userData'])
@@ -116,6 +124,12 @@ export default {
       changeInfo () {
         Object.assign(this.user, this.userData)
         this.linkqq = `http://wpa.qq.com/msgrd?v=3&uin=${ this.user.qq }&site=qq&menu=yes`
+      },
+      async likeList () {
+        let result = await article_user_like( 1,this.userData.id )
+        if ( result.data.code == 200 ) {
+          this.likes = result.data.data
+        }
       }
     }
 }

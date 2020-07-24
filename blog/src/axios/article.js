@@ -2,7 +2,7 @@ import request from '@/axios/request'
 import { getCookie } from '@/utils/cookie'
 let token = getCookie('token')
 
-export const article_add = ( title,article_class,article_tags,skill_tag,content,html_content ) => {
+export const article_add = ( title,article_class,article_tags,skill_tag,content,html_content,catalog ) => {
     return request({
         url: '/article/add',
         method: 'POST',
@@ -13,7 +13,8 @@ export const article_add = ( title,article_class,article_tags,skill_tag,content,
             article_tags,
             skill_tag,
             content,
-            html_content
+            html_content,
+            catalog
         }
     })
 }
@@ -78,5 +79,43 @@ export const article_update = ( id,title,article_class,article_tags,skill_tag,co
             content,
             html_content
         }
+    })
+}
+
+export const article_catalog = ( article_class ) => {
+    return request({
+        url: '/article/catalog',
+        params: {
+            token,
+            article_class
+        }
+    })
+}
+
+export const article_max_catalog = ( article_class ) => {
+    return request({
+        url: '/article/catalog/max',
+        params: {
+            token,
+            article_class
+        }
+    })
+}
+
+export const article_like = ( type,article_id,bool,user_id ) => {
+    // type:    1-无用户id  2-有用户id
+    let p = type == 1 ? { token,type,article_id,bool } : { token,type,article_id,bool,user_id }
+    return request({
+        url: '/article/like',
+        params: p
+    })
+}
+
+export const article_user_like = ( type,user_id,article_id ) => {
+    // type:    1-查询喜欢列表  2-查询单个
+    let p = type == 1 ? { token,type,user_id } : { token,type,user_id,article_id }
+    return request({
+        url: '/article/user-like',
+        params: p
     })
 }

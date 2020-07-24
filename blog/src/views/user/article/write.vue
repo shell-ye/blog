@@ -1,5 +1,10 @@
 <template>
   <div id="article_write">    
+    <div class="max-catalog">
+      <p class="head">当前排序</p>
+      <p class="num">{{ max_catalog + 1}}</p>
+      <el-checkbox v-model="catalogBool" value="true" border size="mini">加入排序</el-checkbox>
+    </div>
     <div class="input"><span>标题:</span><el-input size="medium" v-model="title"></el-input></div>
     <div class="input">
       <span>技能标签:</span>
@@ -24,7 +29,7 @@
 <script>
 import bus from '@/utils/bus'
 import defaults from '@/defaults/index'
-import { article_add } from '@/axios/article'
+import { article_add,article_max_catalog } from '@/axios/article'
 
 import {mavonEditor} from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
@@ -38,6 +43,8 @@ export default {
       skill_tag: '',
       content: '',
       html_content: '',
+      max_catalog: 0,
+      catalogBool: false,
 
       markdownOption: {
         bold: true, // 粗体
@@ -84,29 +91,62 @@ export default {
       for ( let prop in this.article_tags ) {
         obj[prop] = this.article_tags[prop]
       }
-      let result = await article_add( that.title,that.article_class,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>') )
+      let result = this.catalogBool ? await article_add( that.title,that.article_class,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'),(this.max_catalog + 1) ) : await article_add( that.title,that.article_class,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'),10000000 )
       if ( result.data.code == 200 ) { this.$message({message: '添加成功'}) }
     })
   },
   components: {
     mavonEditor
   },
+  watch: {
+    article_class () {
+      this.getMaxCatalog( this.article_class )
+    }
+  },
   methods: {
     changeData(value, render) {
       this.html_content = render;
+    },
+    async getMaxCatalog ( classes ) {
+      let result = await article_max_catalog( classes )
+      if ( result.data.code == 200 ) {
+        this.max_catalog = result.data.data == null ? 0 : result.data.data
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/theme.scss';
 #article_write{
+  position: relative;
+  div.max-catalog{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 110px;
+    height: 130px;
+    background: $themeBG;
+    color: white;
+    text-align: center;
+    p.head{ 
+      padding: 10px 0px; 
+      letter-spacing: 3px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    }
+    p.num{
+      height: 60px;
+      line-height: 60px;
+      font-size: 30px;
+    }
+  }
   div.input{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
-    &:nth-child(4){ margin-bottom: 40px;}
+    &:nth-child(5){ margin-bottom: 40px;}
     span{
       display: block;
       width: 100px;
