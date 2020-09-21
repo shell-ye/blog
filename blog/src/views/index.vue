@@ -1,58 +1,162 @@
 <template>
     <article id="index">
-        <section class="big-title">
-            <p class="animate__animated animate__zoomInDown">全栈开发,奥里给干了!</p>
-        </section>
-        <section class="animate__animated animate__slideInUp learning container white-card">
-            <p class="title"><i class="iconfont iconshuben"></i>最近在学</p>
-            <div class="tags">
-                <span class="tags-1">Nuxt.js</span>
-                <span class="tags-1">Node.js</span>
-                <span class="tags-1">Webpack</span>
-            </div>
-            <span class="learning-words">懒惰象生锈一样,比操劳更能消耗身体;经常用的钥匙,总是亮闪闪的</span>
+        <Swiper size="big"></Swiper>
+        <section class="article">
+			<div class="article-list">
+          		<LongImgCard v-for="(item, index) in lately" :key="index" :index="index" :article="item"></LongImgCard>
+			</div>
+			<div class="info">
+				<div class="white-card about-blog">
+					<img src="@/assets/img/color_logo.png" alt="">
+					<div class="name">本站概况</div>
+					<div class="data">
+						<p>
+							<span>{{ webside_info.article_count }}</span>
+							<span>文章</span>
+						</p>
+						<p>
+							<span>{{ webside_info.views_count }}</span>
+							<span>浏览量</span>
+						</p>
+						<p>
+							<span>{{ webside_info.article_likes_count }}</span>
+							<span>点赞</span>
+						</p>
+					</div>
+				</div>
+				<div class="white-card tells">
+					<p class="head"><i class="iconfont icongonggao"></i>公告</p>
+					<div>目{{ webside_info.tell }}</div>
+				</div>
+				<div class="white-card article-class">
+					<p class="head"><i class="iconfont iconmulu"></i>文章分类</p>
+					<ul v-if="article_list && article_list.length">
+						<li v-for="(item, index) in article_list" :key="index">
+							<span>{{ item.value }}</span>
+							<span>{{ index }}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
         </section>
     </article>
 </template>
 
 <script>
+import defaults from '@/defaults'
+import Swiper from '@/components/Swiper'
+import LongImgCard from '@/components/article/LongImgCard'
+import { init } from '@/axios/web'
+import { article_list } from '@/axios/article'
 export default {
-  name: 'index'
+	name: 'index',
+	data () {
+		return {
+			lately: [
+				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
+				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
+				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
+				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'}
+			],
+			article_list: [],
+			webside_info: {
+				article_count: 0,
+				article_likes_count: 0,
+				views_count: 0,
+				tell: '暂无公告'
+			}
+		}
+	},
+	async mounted () {
+		this.article_list = defaults.article_tags
+		let result = await article_list( 1, 1, 4 )
+		if ( result.data.code == 200 ) {
+			this.lately = result.data.data
+			this.lately.forEach(item => {
+				item.update_time = item.update_time.substr(0,10)
+				item.router = `/article/${ item.id }`
+			})
+		}
+	},
+	async activated () {
+		let result = await init()
+		if ( result.data.code == 200 ) {
+			this.webside_info = result.data.data
+		}
+	},
+	components: {
+		Swiper, LongImgCard
+	}
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/theme.scss';
-#index{
-  transform: translateY(-60px);
-  color: white;
-  section.big-title{
-    color: white;
-    background: $themeBG;
-    text-align: center;
-    font-size: 60px;
-    letter-spacing: 10px;
-    height: 560px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  section.learning{
-    margin-top: -40px;
-    div.tags{
-      margin-bottom: 20px;
-    }
-    > span.learning-words{ 
-      color: $gray;
-      font-size: 14px;  
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      position: absolute;
-      bottom: 20px;
-      font-size: 16px;
-    }
-  }
+
+.article {
+	display: flex;
+	justify-content: center;
+	.info {
+		> * {
+			width: 280px;
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.about-blog {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			text-align: center;
+			img {
+				width: 64px;
+				height: 64px;
+			}
+			.name {
+				font-size: 20px;
+				margin: 40px 0px 20px 0px;
+				font-weight: bold;
+			}
+			.data {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				p {
+					display: flex;
+					flex-direction: column;
+					&:nth-child(2) {
+						margin: 0px 40px;
+					}
+					span {
+						&:first-child {
+							margin-bottom: 10px;
+							font-size: 20px;
+						}
+					}
+				}
+			}
+		}
+		.tells {
+			div {
+				line-height: 24px;
+				text-indent: 2rem;
+			}
+		}
+		.article-class {			
+			ul {
+				width: 100%;
+				li {
+					width: 100%;
+					line-height: 30px;
+					box-sizing: border-box;
+					padding: 0px 1rem;
+					display: flex;
+					justify-content: space-between;
+				}
+			}
+		}
+	}
 }
 
 .animate__zoomInDown{ animation-delay: .5s;}

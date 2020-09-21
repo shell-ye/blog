@@ -72,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 #user_article{
   > div{
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
     z-index: 1;
   }

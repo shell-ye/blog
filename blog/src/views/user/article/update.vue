@@ -17,7 +17,7 @@
       <span>相关标签:</span>
       <el-checkbox v-for="item in article_info.article_tags" :key="item.value" v-model="article_tags" :label="item.label" border size="medium"></el-checkbox>
     </div>
-    <mavon-editor :toolbars="markdownOption" v-model="content" :ishljs="true" @change="changeData" />
+    <mavon-editor :toolbars="markdownOption" v-model="content" @change="changeData" />
   </div>
 </template>
 

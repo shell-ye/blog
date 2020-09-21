@@ -23,7 +23,7 @@
     <section class="note-catalog">
       <h3><i class="iconfont iconmulu"></i>目录</h3>
       <ul v-if="catalog && catalog.length">
-        <li v-for="(item,index) in catalog" :key="index" @click="search( item.id )">{{ index + 1 }} . {{ item.title }}</li>
+        <router-link v-for="(item,index) in catalog" :key="index" tag="li" :to="{ path: `/article/${ item.id }`}" @click.native="search( item.id )">{{ index + 1 }} . {{ item.title }}</router-link>
       </ul>
     </section>
   </article>
@@ -54,18 +54,7 @@ export default {
       let result = id ? await article_search( 1,id ) : await article_search( 1,this.$route.params.id )
       if ( result.data.code == 200 ) {
         this.article = result.data.data
-        let pre_count = getStrCount( this.article.html_content, '<pre>' )
-        if ( this.article.article_class == 'git' ) {
-          for ( let prop = 0; prop < pre_count; prop++ ) {
-            this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-bash">')
-            this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
-          }
-        } else if ( this.article.article_class == 'vue' || this.article.article_class == 'nuxt' || this.article.article_class == 'node' ) {
-          for ( let prop = 0; prop < pre_count; prop++ ) {
-            this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-javascript">')
-            this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
-          }
-        }
+        this.changeHTMLStr()
       }
       this.checkUserLike()
     },
@@ -100,6 +89,27 @@ export default {
             this.likedBool = false 
           }
         }
+      }
+    },
+    changeHTMLStr () {
+      let pre_count = getStrCount( this.article.html_content, '<pre>' )
+      if ( this.article.article_class == 'git' ) {
+          for ( let prop = 0; prop < pre_count; prop++ ) {
+            this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-bash">')
+            this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
+          }
+        } else if ( this.article.article_class == 'vue' || this.article.article_class == 'nuxt' || this.article.article_class == 'node' ) {
+          for ( let prop = 0; prop < pre_count; prop++ ) {
+            this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-javascript">')
+            this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
+          }
+        }
+      let li_count = getStrCount( this.article.html_content, '<li><br>' )
+      for ( let prop = 0; prop < li_count; prop++ ) {
+        this.article.html_content = this.article.html_content.replace('<li><br>','<li>')
+        this.article.html_content = this.article.html_content.replace('<br></li>','</li>')
+        this.article.html_content = this.article.html_content.replace('<li><br />','<li>')
+        this.article.html_content = this.article.html_content.replace('<br /></li>','</li>')
       }
     }
   }

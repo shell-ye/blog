@@ -19,7 +19,7 @@ export const article_add = ( title,article_class,article_tags,skill_tag,content,
     })
 }
 
-export const article_list = ( type,pages,page_count,article_class ) => {
+export const article_list = ( type, pages, page_count, article_class ) => {
     // type: 1-查询全部     2-按类查询
     let p = {}
     if ( type == 1 ) {

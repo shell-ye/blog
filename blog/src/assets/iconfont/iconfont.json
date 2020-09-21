@@ -6,6 +6,41 @@
   "description": "个人博客",
   "glyphs": [
     {
+      "icon_id": "14578047",
+      "name": "copyright",
+      "font_class": "copyright",
+      "unicode": "fad7",
+      "unicode_decimal": 64215
+    },
+    {
+      "icon_id": "1337984",
+      "name": "公告",
+      "font_class": "gonggao",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "8627943",
+      "name": "ic-github",
+      "font_class": "ic-github",
+      "unicode": "e779",
+      "unicode_decimal": 59257
+    },
+    {
+      "icon_id": "13739744",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "15475799",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
       "icon_id": "8281054",
       "name": "心 爱心",
       "font_class": "xinaixin",

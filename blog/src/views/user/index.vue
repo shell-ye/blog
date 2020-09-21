@@ -11,6 +11,7 @@
           <ul>
             <router-link to="/user/center" tag="li" active-class="active">账号中心</router-link>
             <router-link to="/user/article" tag="li" active-class="active">文章管理</router-link>
+            <router-link to="/" tag="li">退出</router-link>
           </ul>
         </section>
       </aside>
@@ -41,13 +42,13 @@ export default {
 #user-center{
   display: flex;
   justify-content: flex-start;
-  height: calc( 100vh - 60px );
+  height: 100vh;
   aside{
     width: 240px;
     background: $themeBG;
     border-top: 1px solid $gray;
     position: fixed;
-    height: calc( 100vh - 60px );
+    height: 100vh;
     overflow: auto;
     &::-webkit-scrollbar{ width: 0;}
     section.head-img{
@@ -117,7 +118,7 @@ export default {
     width: calc( 100vw - 260px );
     position: relative;
     left: 240px;
-    padding: 40px;
+    padding: 40px 40px 0px 40px;
     box-sizing: border-box;
   }
 }

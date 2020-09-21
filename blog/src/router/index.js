@@ -5,6 +5,7 @@ import routerTable from './routerTable'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  mode: 'hash',
   routes: routerTable
 })
 export default router

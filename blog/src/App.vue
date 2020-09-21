@@ -4,11 +4,13 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <Footer></Footer>
   </main>
 </template>
 
 <script>
-import Nav from '@/components/nav'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 import { user_info } from '@/axios/user'
 import { getCookie } from '@/utils/cookie'
 export default {
@@ -20,7 +22,7 @@ export default {
     }
   },
   components: {
-    Nav
+    Nav, Footer
   }
 }
 </script>

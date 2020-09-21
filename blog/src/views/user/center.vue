@@ -35,7 +35,10 @@
       <div class="likes user-card">
         <p class="title">我的点赞<i class="iconfont iconzan1"></i></p>
         <ul>
-          <li v-for="(item,index) in likes" :key="index">{{ item.title }}</li>
+          <li v-for="(item,index) in likes" :key="index">
+            <router-link tag="p" :to="{ path: `/article/${ item.article_id }` }">{{ item.title }}</router-link>
+            <p>{{ item.likes_time | timeDate }}</p>
+          </li>
         </ul>
       </div>
       <div class="friends user-card">
@@ -144,7 +147,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     color: white;
-    background-image: url(./../../assets/img/user_bg.jpg);
+    background-image: url(~@/assets/img/user_bg.jpg);
     background-size: cover;
     background-position: center;
     position: relative;
@@ -256,7 +259,7 @@ export default {
           height: 36px;
           cursor: pointer;
           margin: 0 100px 0 40px;
-          background: url(./../../assets/img/select_img.png);
+          background: url(~@/assets/img/select_img.png);
           input{
             width: 1px;
             height: 1px;

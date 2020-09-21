@@ -6,11 +6,14 @@ export default {
         { value: 'nuxt', label: 'nuxt'}
     ],
     article_tags: [
-        { value: 'vue', label: 'vue'},
-        { value: 'git', label: 'git'},
-        { value: 'node', label: 'node'},
-        { value: 'nuxt', label: 'nuxt'},
-        { value: 'axios', label: 'axios'}
+        { value: 'HTHL+CSS', label: 'html+css'},
+        { value: 'Javascript', label: 'Javascript'},
+        { value: 'Vue', label: 'vue'},
+        { value: 'Git', label: 'git'},
+        { value: 'Node', label: 'node'},
+        { value: 'Nuxt', label: 'nuxt'},
+        { value: 'Axios', label: 'axios'},
+        { value: 'Windows', label: 'Windows'}
     ],
     skill_tags: [
         { value: '基本技能', label: '基本技能'},

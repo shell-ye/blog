@@ -1,7 +1,7 @@
 @import '@/assets/css/theme.scss';
 
 // 基本 css
-body{ font-size: 14px; background: #f7f7f7;}
+body{ font-size: 14px; background: #f7f7f7; font-family: 'jiangxizhuokairegular';}
 body::-webkit-scrollbar { width: 13px; height: 13px;}
 body::-webkit-scrollbar-corner { background: transparent;}
 body::-webkit-scrollbar-track,body::-webkit-scrollbar-thumb { min-height: 20px; background-clip: content-box; box-shadow: 0 0 0 5px rgba(0, 0, 0, .2) inset;}
@@ -46,13 +46,13 @@ a{ outline: none;}
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
     padding: 20px;
+    margin: 40px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     color: black;
     position: relative;
-    min-height: 360px;
     .title{
         width: 100%;
         text-align: center;
@@ -69,6 +69,15 @@ a{ outline: none;}
         display: flex;
         justify-content: center;
     }
+    .head {
+        width: 100%;
+        margin-bottom: 10px;
+        border-bottom: 1px solid black;
+        padding-bottom: 10px;
+        i {
+            margin-right: 4px;
+        }
+    }
 }
 
 .article-card{
@@ -82,10 +91,13 @@ a{ outline: none;}
     &:hover{
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     }
+    > div{ overflow: hidden;}
     img{
         width: 100%;
         height: 218px;
         cursor: pointer;
+        transition: .5s;
+        &:hover{ transform: scale(1.2);}
     }
     .text{
         height: 102px;
@@ -95,9 +107,9 @@ a{ outline: none;}
         padding: 10px 20px;
         position: relative;
         align-items: center;
-        title{
-            font-size: 16px;
-            font-weight: normal;
+        .title{
+            font-size: 16px!important;
+            font-weight: bold;
             cursor: pointer;
         }
         .bottom{
@@ -276,7 +288,7 @@ a{ outline: none;}
             letter-spacing: 2px;
             height: 40px;
             line-height: 40px;
-            margin-top: 40px;
+            margin: 40px 0px;
         }
         h3{
             font-weight: bold;
@@ -288,7 +300,8 @@ a{ outline: none;}
         }
         #note_content{
             pre{
-                padding: 40px 20px!important;
+                padding: 20px!important;
+                font-size: 14px;
             }
             blockquote{
                 padding: 0px 20px;
@@ -311,6 +324,7 @@ a{ outline: none;}
                     }
                 }
             }
+            p{ line-height: 20px;}
         }
     }
 }
@@ -335,14 +349,23 @@ a{ outline: none;}
         i{ font-size: 20px; margin-left: 4px;}
     }
     ul{
+        height: 260px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar{ width: 0;}
         li{
             height: 30px;
             line-height: 30px;
             color: $gray;
-            cursor: pointer;
-            &:hover{
-                color: black;
-                text-decoration: underline;
+            display: flex;
+            justify-content: space-between;
+            p{
+                &:first-child{
+                    cursor: pointer;
+                    &:hover{
+                        color: black;
+                        text-decoration: underline;
+                    }
+                }
             }
         }
     }
@@ -378,7 +401,7 @@ a{ outline: none;}
             color: rgb(161, 161, 161);
             width: 100%;
             height: 500px;
-            background: url(/assets/img/no_data.png);
+            background: url(~@/assets/img/no_data.png);
             background-position: center;
             background-repeat: no-repeat;
             border-bottom: 0;

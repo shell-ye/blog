@@ -5,16 +5,21 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import { setCookie } from './utils/cookie'
-import './utils/element-ui'
-import './utils/filter'
+import './element-ui'
+import './filter'
 
 
 import './assets/css/element-ui.css'
 import './assets/iconfont/iconfont.css'
 import './assets/css/reset.css'
 import './assets/css/animate.css'
+import './assets/css/hljs.css'
 import './assets/css/prism.css'
 import './assets/js/prism.js'
+import 'mavon-editor/dist/css/index.css'
+
+// 彩色背景
+import "@/assets/js/colorLine"
 
 Vue.config.productionTip = false
 

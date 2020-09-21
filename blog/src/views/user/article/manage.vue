@@ -144,6 +144,7 @@ export default {
           width: 12.5%;
           min-width: 100px;
           text-align: center;
+          &:nth-child(2){ min-width: 300px;}
           &:last-child{ min-width: 200px;}
         }
       }
