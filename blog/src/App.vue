@@ -1,11 +1,11 @@
 <template>
-  <main id="app">
-    <Nav></Nav>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
-    <Footer></Footer>
-  </main>
+	<main id="app">
+		<Nav v-show="nav_foot_show"></Nav>
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
+		<Footer v-show="nav_foot_show"></Footer>
+	</main>
 </template>
 
 <script>
@@ -13,21 +13,48 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { user_info } from '@/axios/user'
 import { getCookie } from '@/utils/cookie'
+import { addViews, init } from '@/axios/web'
 export default {
-  async beforeCreate () {
-    this.$store.commit('setUserData', getCookie('token'))
-    let result = await user_info( this.$store.state.token )
-    if ( result.data.code == 200 ) {
-      this.$store.commit('setUserData', result.data.data)
-    }
-  },
-  components: {
-    Nav, Footer
-  }
+	async beforeCreate () {
+		this.$store.commit('setToken', getCookie('token'))
+		let result = await user_info( this.$store.state.token )
+		if ( result.data.code == 200 ) {
+			this.$store.commit('setUserData', result.data.data)
+		}
+	},
+	data () {
+		return {
+			nav_foot_show: true
+		}
+	},
+	async mounted () {
+		let result = await init()
+		if ( result.data.code == 200 ) {
+			this.$store.commit('setWebsideInfo', result.data.data)
+		}
+		this.changeShow()
+		addViews()
+	},
+	watch: {
+		$route () {
+			this.changeShow()
+		}
+	},
+	components: {
+		Nav, Footer
+	},
+	methods: {
+		changeShow () {
+			if ( this.$route.name == 'login' || window.location.href.indexOf('/user') != -1 ) {
+				this.nav_foot_show = false
+			} else {
+				this.nav_foot_show = true
+			}
+		}
+	}
 }
 </script>
 
 <style lang="scss">
-@import './assets/css/theme.scss';
-@import './assets/css/common.scss';
+
 </style>

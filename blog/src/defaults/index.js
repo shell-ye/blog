@@ -1,18 +1,12 @@
 export default {
-    article_class: [
-        { value: 'vue', label: 'vue'},
-        { value: 'git', label: 'git'},
-        { value: 'node', label: 'node'},
-        { value: 'nuxt', label: 'nuxt'}
-    ],
     article_tags: [
-        { value: 'HTHL+CSS', label: 'html+css'},
+        { value: 'HTML+CSS', label: 'HTML+CSS'},
         { value: 'Javascript', label: 'Javascript'},
-        { value: 'Vue', label: 'vue'},
-        { value: 'Git', label: 'git'},
-        { value: 'Node', label: 'node'},
-        { value: 'Nuxt', label: 'nuxt'},
-        { value: 'Axios', label: 'axios'},
+        { value: 'Vue', label: 'Vue'},
+        { value: 'Git', label: 'Git'},
+        { value: 'Node', label: 'Node'},
+        { value: 'Nuxt', label: 'Nuxt'},
+        { value: 'Axios', label: 'Axios'},
         { value: 'Windows', label: 'Windows'}
     ],
     skill_tags: [

@@ -3,7 +3,9 @@
     <section class="redbg"></section>
     <section class="container note-content">
       <div class="head">
-        <p><router-link tag="span" :to="{ path: '/notes', query: { article_class: article.article_class} }" class="tags-3">{{ article.article_class | firstUpcase }}</router-link></p>
+        <p v-if="tags && tags.length">
+          <router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item }}</router-link>
+        </p>
         <p class="class"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</p>
       </div>
       <div class="time">
@@ -32,11 +34,12 @@
 <script>
 import { mapState } from 'vuex'
 import { getStrCount } from '@/utils/index'
-import { article_search,article_catalog,article_like,article_user_like } from '@/axios/article'
+import { article_search,article_like,article_user_like } from '@/axios/article'
 export default {
   data () {
     return {
       article: {},
+      tags: [],
       catalog: {},
       likedBool: false
     }
@@ -44,7 +47,6 @@ export default {
   async activated () {
     let that = this
     await this.search()
-    await this.getCatalog()
   },
   computed: {
     ...mapState(['userData'])
@@ -54,21 +56,19 @@ export default {
       let result = id ? await article_search( 1,id ) : await article_search( 1,this.$route.params.id )
       if ( result.data.code == 200 ) {
         this.article = result.data.data
+        for ( let prop in JSON.parse( this.article.article_tags ) ) {
+          this.tags.push(JSON.parse( this.article.article_tags )[prop])
+        }
         this.changeHTMLStr()
       }
       this.checkUserLike()
-    },
-    async getCatalog () {    
-      let result = await article_catalog( this.article.article_class )
-      if ( result.data.code == 200 ) {
-        this.catalog = result.data.data == null ? 0 : result.data.data
-      }
     },
     async likedHandler () {
       let result = {}
       if ( this.userData && this.userData.id ) {
         result = await article_like( 2,this.article.id,!this.likedBool,this.userData.id )
       } else {
+        if ( this.likedBool )  return
         result = await article_like( 1,this.article.id,!this.likedBool )
       }
       if ( result.data.code == 200 ) {
@@ -93,12 +93,12 @@ export default {
     },
     changeHTMLStr () {
       let pre_count = getStrCount( this.article.html_content, '<pre>' )
-      if ( this.article.article_class == 'git' ) {
+      if ( this.article.article_tags.indexOf('Git') != -1 ) {
           for ( let prop = 0; prop < pre_count; prop++ ) {
             this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-bash">')
             this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
           }
-        } else if ( this.article.article_class == 'vue' || this.article.article_class == 'nuxt' || this.article.article_class == 'node' ) {
+        } else if ( this.article.article_tags.indexOf('Vue') != -1 || this.article.article_tags.indexOf('Nuxt') != -1 || this.article.article_tags.indexOf('Node') != -1 ) {
           for ( let prop = 0; prop < pre_count; prop++ ) {
             this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-javascript">')
             this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')

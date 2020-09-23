@@ -1,13 +1,13 @@
 <template>
-    <nav id="nav" v-show="showBool" :class="{nav_shadow: show_shadow == 1}">
+    <nav id="nav" :class="{nav_shadow: show_shadow == 1}">
         <div>
             <a href="/" class="logo">
             <img src="@/assets/img/logo.png" alt=""><span>夏叶博客</span></a>
             <ul>
                 <li><router-link to="/" tag="a"><i class="iconfont iconfangzi"></i>首页</router-link></li>
-                <li><router-link to="/" tag="a"><i class="iconfont iconbiaoqian"></i>技能标签</router-link></li>
+                <li><router-link :to="{name: 'categories'}" tag="a"><i class="iconfont iconshuben"></i>文章分类</router-link></li>
                 <li>
-                    <router-link to="/notes" tag="a"><i class="iconfont iconshuben"></i>学习笔记</router-link>
+                    <router-link to="/notes" tag="a"><i class="iconfont iconbi"></i>学习笔记</router-link>
                     <div class="arrow"></div>
                     <div class="list notes">
                         <p @click="notes('vue')">
@@ -45,12 +45,10 @@ export default {
     name: 'navigation',
     data () {
         return {
-            showBool: true,
             show_shadow: false
         }
     },
     mounted () {
-        this.route()
         window.addEventListener('scroll',() => {
             this.show_shadow = window.scrollY ? true : false
         })
@@ -58,19 +56,7 @@ export default {
     computed: {
         ...mapState(['userData'])
     },
-    watch: {
-        $route () {
-            this.route()
-        }
-    },
     methods: {
-        route () {
-            if ( this.$route.name == 'login' || window.location.href.indexOf('/user') != -1 ) {
-                this.showBool = false
-            } else {
-                this.showBool = true
-            }
-        },
         async logout () {
             let result = await log_out()
             if ( result.data.code == 200 ) {
@@ -89,7 +75,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/css/theme.scss';
-$height: 60px;
+$height: 50px;
 #nav{
     z-index: 1600;
     position: fixed;

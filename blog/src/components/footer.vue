@@ -1,17 +1,25 @@
 <template>
   <footer id="footer">
-      <p class="name"><i class="iconfont iconcopyright"></i>2017 - 2020 By xiaye | 本站已运行200天</p>
+      <p class="name" v-if="create_time"><i class="iconfont iconcopyright"></i>2017 - 2020 By xiaye | 本站建立于{{ create_time.substr(0, 10) }}</p>
   </footer>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-
+    name: 'Footer',
+    data () {
+        return {
+            running_time: ''
+        }
+    },
+    computed: {
+        ...mapGetters(['create_time'])
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/theme';
 #footer{
     width: 100%;
     display: flex;
@@ -22,8 +30,6 @@ export default {
     background-repeat: no-repeat;
     background-image: url(~@/assets/img/index_BG1.jpg);
     flex-wrap: wrap;
-    position: fixed;
-    bottom: 0;
     p{
         width: 100%;
         padding: 10px;

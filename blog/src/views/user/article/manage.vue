@@ -3,12 +3,12 @@
     <div class="input">
       <p>
         <span>选择文章类型:</span>
-        <el-select v-model="article_class" placeholder="请选择">
+        <el-select v-model="article_tags" placeholder="请选择">
           <el-option label="全部" value="全部">全部</el-option>
-          <el-option v-for="item in article_info.article_class" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          <el-option v-for="item in article_info.article_tags" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </p>
-      <el-button type="primary" @click="list( article_class )">搜索</el-button>
+      <el-button type="primary" @click="list">搜索</el-button>
     </div>
     <div class="long_list">
       <ul>
@@ -58,12 +58,12 @@
 
 <script>
 import defaults from '@/defaults/index'
-import { article_list,article_delete } from '@/axios/article'
+import { article_list, article_delete } from '@/axios/article'
 export default {
   data () {
     return {
       article_info: {},
-      article_class: '全部',
+      article_tags: '全部',
       article_list: [],
       out_index: 0,
       pages: 1,
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     async list () {
-      let result = this.article_class != '全部' ? await article_list( 2,this.pages,12,this.article_class ) : await article_list( 1,this.pages,12 )
+      let result = this.article_tags != '全部' ? await article_list( 2,this.pages,12,this.article_tags ) : await article_list( 1,this.pages,12 )
       if ( result.data.code == 200 ) {
         this.article_list = result.data.data
         this.max_page = Math.ceil( result.data.pages_info.count / 12 )

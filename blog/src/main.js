@@ -21,6 +21,10 @@ import 'mavon-editor/dist/css/index.css'
 // 彩色背景
 import "@/assets/js/colorLine"
 
+// 公用样式
+import '@/assets/css/common.scss'
+import '@/assets/css/theme.scss'
+
 Vue.config.productionTip = false
 
 axios.get(`${ config.server_URL }/user/token`).then(data => {

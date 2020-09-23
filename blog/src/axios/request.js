@@ -103,7 +103,6 @@ const request = ({
         })
         if ( res.data.code == '000013' ) {
           store.commit('logout')
-          console.log( store )
           let result = await getToken()
           if ( result.data.code == 200 ) {
             store.commit('setToken', result.data.data)

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
 Vue.filter('timeDate', value => {
-    console.log( typeof value )
     // if ( typeof value != 'string' ) { value = value.toString() }
     let result = value.substr(0,10)
     return result

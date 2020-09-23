@@ -25,7 +25,7 @@ app.use(cookieSession({
   keys: ['123456'],
 
   // Cookie Options
-  maxAge: 24 * 60 * 60 * 60 * 1000
+  maxAge: 60 * 60 * 60 * 1000
 }))
 
 // 处理跨域请求
@@ -34,7 +34,7 @@ app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Headers', 'Content-type');
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS,PATCH");
-  res.header('Access-Control-Max-Age',1728000);//预请求缓存20天
+  res.header('Access-Control-Max-Age',1728000);// 预请求缓存20天
   next();  
 });
 

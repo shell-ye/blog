@@ -9,7 +9,14 @@ const store = new Vuex.Store({
     state: {
         token: '',
         userData: {},
-        article_id: ''
+        article_id: '',
+        webside: {
+            article_count: 0,
+            article_likes_count: 0,
+            views_count: 0,
+            tell: '暂无公告',
+            create_time: ''
+        }
     },
     mutations: {
         setUserData ( state,data ) {        
@@ -25,6 +32,14 @@ const store = new Vuex.Store({
         logout ( state ) {
             state.token = ''
             state.userData = {}
+        },
+        setWebsideInfo ( state, data ) {
+            state.webside = data
+        }
+    },
+    getters: {
+        create_time ( state ) {
+            return state.webside.create_time
         }
     },
     actions: {

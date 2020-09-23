@@ -7,3 +7,9 @@ export const init = () => {
         url: '/init'
     })
 }
+
+export const addViews = () => {
+    return request({
+        url: '/views'
+    })
+}

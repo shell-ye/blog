@@ -9,12 +9,6 @@
     </div>
     <div class="input">
       <span>文章分类:</span>
-      <el-select v-model="article_class" placeholder="请选择">
-        <el-option v-for="item in article_info.article_class" :key="item.value" :label="item.label" :value="item.value"></el-option>
-      </el-select>
-    </div>
-    <div class="input">
-      <span>相关标签:</span>
       <el-checkbox v-for="item in article_info.article_tags" :key="item.value" v-model="article_tags" :label="item.label" border size="medium"></el-checkbox>
     </div>
     <mavon-editor :toolbars="markdownOption" v-model="content" @change="changeData" />
@@ -33,7 +27,6 @@ export default {
         return {
             article_info: {},
             title: '',
-            article_class: '',
             article_tags: [],
             skill_tag: '',
             content: '',
@@ -83,7 +76,8 @@ export default {
             for ( let prop in this.article_tags ) {
                 obj[prop] = this.article_tags[prop]
             }
-            let result = await article_update( that.$store.state.article_id,that.title,that.article_class,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>') )
+            // obj = JSON.stringify(obj)
+            let result = await article_update( that.$store.state.article_id,that.title,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>') )
             if ( result.data.code == 200 ) { this.$message({message: '更新成功'}) }
         })
     },
@@ -95,7 +89,6 @@ export default {
             if ( result.data.code == 200 ) {
                 this.title = result.data.data.title
                 this.content = result.data.data.content
-                this.article_class = result.data.data.article_class
                 this.skill_tag = result.data.data.skill_tag
                 let arr = []
                 for ( let prop in JSON.parse( result.data.data.article_tags ) ) {

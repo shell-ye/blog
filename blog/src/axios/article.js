@@ -2,30 +2,28 @@ import request from '@/axios/request'
 import { getCookie } from '@/utils/cookie'
 let token = getCookie('token')
 
-export const article_add = ( title,article_class,article_tags,skill_tag,content,html_content,catalog ) => {
+export const article_add = ( title, article_tags, skill_tag, content,html_content ) => {
     return request({
         url: '/article/add',
         method: 'POST',
         data: {
             token,
             title,
-            article_class,
             article_tags,
             skill_tag,
             content,
-            html_content,
-            catalog
+            html_content
         }
     })
 }
 
-export const article_list = ( type, pages, page_count, article_class ) => {
+export const article_list = ( type, pages, page_count, article_tags ) => {
     // type: 1-查询全部     2-按类查询
     let p = {}
     if ( type == 1 ) {
-        p = { token,type,pages,page_count}
+        p = { token, type, pages, page_count}
     } else if ( type == 2 ) {
-        p = { token,type,pages,page_count,article_class}
+        p = { token, type, pages, page_count, article_tags}
     }
     return request({
         url: '/article/list',
@@ -56,7 +54,7 @@ export const article_search = ( type,param ) => {
         params = {
             token,
             type,
-            article_class: param
+            article_tags: param
         }
     }
     return request({
@@ -65,7 +63,7 @@ export const article_search = ( type,param ) => {
     })
 }
 
-export const article_update = ( id,title,article_class,article_tags,skill_tag,content,html_content ) => {
+export const article_update = ( id,title,article_tags,skill_tag,content,html_content ) => {
     return request({
         url: '/article/update',
         method: 'POST',
@@ -73,31 +71,10 @@ export const article_update = ( id,title,article_class,article_tags,skill_tag,co
             token,
             id,
             title,
-            article_class,
             article_tags,
             skill_tag,
             content,
             html_content
-        }
-    })
-}
-
-export const article_catalog = ( article_class ) => {
-    return request({
-        url: '/article/catalog',
-        params: {
-            token,
-            article_class
-        }
-    })
-}
-
-export const article_max_catalog = ( article_class ) => {
-    return request({
-        url: '/article/catalog/max',
-        params: {
-            token,
-            article_class
         }
     })
 }

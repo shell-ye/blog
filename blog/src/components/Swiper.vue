@@ -8,7 +8,7 @@
             <slideritem class="page1">
                 <p class="name">Xiaye</p>
                 <p class="btn-list">
-                    <button>开始阅读</button>
+                    <button @click="toRead">开始阅读</button>
                     <router-link tag="button" :to="{name: 'author'}">了解作者</router-link>
                 </p>
                 <p class="icon-list">
@@ -44,7 +44,7 @@ export default {
                 currentPage: 0,
                 thresholdDistance: 100,
                 thresholdTime: 3000,
-                autoplay: 5000,
+                // autoplay: 5000,
                 loop:true,
                 direction:'horizontal',
                 loopedSlides:1,
@@ -55,7 +55,8 @@ export default {
             saying: [
                 '青青子衿，悠悠我心。但为君故，沉吟至今',
                 '骐骥一跃，不能十步。驽马十驾，功在不舍'
-            ]
+            ],
+            timer: ''
         }
     },
     mounted () {
@@ -71,6 +72,18 @@ export default {
         slider, slideritem
     },
     methods: {
+        toRead () {
+            this.timer = setInterval(() => {
+                document.documentElement.scrollTop += 100
+                if ( document.documentElement.scrollTop >= ( document.documentElement.clientHeight - 60 ) ) {
+                    clearInterval( this.timer )
+                }
+            }, 16)
+            // clientHeight / innerHeight
+            //  document.documentElement.scrollTop //IE浏览器
+            // window.pageYOffset //Safari浏览器
+            // document.body.scrollTop //opera，FireFox
+        }
     }
 }
 </script>
@@ -125,20 +138,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     p.name {
         font-size: 60px;
         letter-spacing: 12px;
-        width: 100%;
         position: relative;
-        top: 200px;
+        margin-top: 150px;
     }
     p.btn-list {
-        width: 100%;
         display: flex;
         justify-content: center;
         position: relative;
-        top: 180px;
+        margin: 300px 0 80px 0 ;
         button {
             margin: 0 40px;
             background: transparent;
@@ -168,11 +179,20 @@ export default {
 }
 
 .big .page2 {
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-image: url(~@/assets/img/index_BG2.jpg);
     p.text{
         letter-spacing: 10px;
+    }
+}
+
+@media screen and (max-width: 1377px) {
+    p.name {
+        margin-top: 100px!important;
+    }
+    p.btn-list {
+        margin: 250px 0 40px 0!important;
     }
 }
 </style>

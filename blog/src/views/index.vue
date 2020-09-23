@@ -11,22 +11,22 @@
 					<div class="name">本站概况</div>
 					<div class="data">
 						<p>
-							<span>{{ webside_info.article_count }}</span>
+							<span>{{ webside.article_count }}</span>
 							<span>文章</span>
 						</p>
 						<p>
-							<span>{{ webside_info.views_count }}</span>
+							<span>{{ webside.views_count }}</span>
 							<span>浏览量</span>
 						</p>
 						<p>
-							<span>{{ webside_info.article_likes_count }}</span>
+							<span>{{ webside.article_likes_count }}</span>
 							<span>点赞</span>
 						</p>
 					</div>
 				</div>
 				<div class="white-card tells">
 					<p class="head"><i class="iconfont icongonggao"></i>公告</p>
-					<div>目{{ webside_info.tell }}</div>
+					<div>{{ webside.tell }}</div>
 				</div>
 				<div class="white-card article-class">
 					<p class="head"><i class="iconfont iconmulu"></i>文章分类</p>
@@ -46,8 +46,8 @@
 import defaults from '@/defaults'
 import Swiper from '@/components/Swiper'
 import LongImgCard from '@/components/article/LongImgCard'
-import { init } from '@/axios/web'
 import { article_list } from '@/axios/article'
+import { mapState } from 'vuex'
 export default {
 	name: 'index',
 	data () {
@@ -58,13 +58,7 @@ export default {
 				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
 				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'}
 			],
-			article_list: [],
-			webside_info: {
-				article_count: 0,
-				article_likes_count: 0,
-				views_count: 0,
-				tell: '暂无公告'
-			}
+			article_list: []
 		}
 	},
 	async mounted () {
@@ -78,11 +72,8 @@ export default {
 			})
 		}
 	},
-	async activated () {
-		let result = await init()
-		if ( result.data.code == 200 ) {
-			this.webside_info = result.data.data
-		}
+	computed: {
+		...mapState(['webside'])
 	},
 	components: {
 		Swiper, LongImgCard
