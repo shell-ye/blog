@@ -1,7 +1,7 @@
 @import '@/assets/css/theme.scss';
 
 // 基本 css
-body{ font-size: 14px; background: #f7f7f7; font-family: 'jiangxizhuokairegular';}
+body{ font-size: 16px!important; background: #f7f7f7; font-family: 'jiangxizhuokairegular';}
 body::-webkit-scrollbar { width: 13px; height: 13px;}
 body::-webkit-scrollbar-corner { background: transparent;}
 body::-webkit-scrollbar-track,body::-webkit-scrollbar-thumb { min-height: 20px; background-clip: content-box; box-shadow: 0 0 0 5px rgba(0, 0, 0, .2) inset;}
@@ -10,9 +10,8 @@ body::-webkit-scrollbar-track-piece { border-radius: 999px; border: 5px solid tr
 body::-webkit-scrollbar-track, body::-webkit-scrollbar-thumb { border-radius: 999px; border: 5px solid transparent;}
 
 button{ outline: none; border: 0; text-align: center;}
-svg{ width: 16px; height: 16px;}
 i{ margin-right: 4px;}
-a{ outline: none;}
+a{ outline: none!important;}
 
 // 路由跳转过渡动画
 .page-enter-active, .page-leave-active {
@@ -195,9 +194,9 @@ a{ outline: none;}
 }
 
 .note-content{    
-    width: 800px;
+    width: 1000px;
     background: white;
-    padding: 20px 40px;
+    padding: 40px;
     .head{
         display: flex;
         justify-content: space-between;
@@ -237,6 +236,7 @@ a{ outline: none;}
         }
     }
     .content{
+        width: 100%;
         h2{
             font-size: 32px;
             text-align: center;
@@ -254,9 +254,12 @@ a{ outline: none;}
             font-size: 22px;
         }
         #note_content{
+            > * {
+                margin-bottom: 30px;
+            }
             pre{
                 padding: 20px!important;
-                font-size: 14px;
+                font-size: 16px;
             }
             blockquote{
                 padding: 0px 20px;
@@ -279,7 +282,9 @@ a{ outline: none;}
                     }
                 }
             }
-            p{ line-height: 20px;}
+            p{ 
+                line-height: 24px;
+            }
         }
     }
 }

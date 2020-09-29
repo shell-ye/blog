@@ -26,7 +26,7 @@
       <p class="title">我的足迹</p>
       <div class="count">
         <p><span>点赞数</span><i class="iconfont iconzan1"></i><span v-if="likes">{{ likes.length }}个</span></p>
-        <p><span>浏览次数</span><i class="iconfont iconzuji"></i><span>{{ userData.looked }}条</span></p>
+        <p><span>浏览次数</span><i class="iconfont iconzuji"></i><span>{{ userData.looked + 1 }}条</span></p>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         <ul>
           <li v-for="(item,index) in likes" :key="index">
             <router-link tag="p" :to="{ path: `/article/${ item.article_id }` }">{{ item.title }}</router-link>
-            <p>{{ item.likes_time | timeDate }}</p>
+            <p>{{ item.time | timeDate }}</p>
           </li>
         </ul>
       </div>

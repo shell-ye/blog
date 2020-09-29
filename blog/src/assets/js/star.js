@@ -3,10 +3,11 @@ export default function ( id ) {
   var arr = new Array();
   var starCount = 800;
   var windowWidth = ''
-  //初始化画布及context
+    //初始化画布及context
   function init() {
     //获取canvas
     var stars = document.getElementById(id);
+    console.log(stars)
     windowWidth = window.innerWidth; //当前的窗口的高度
     stars.width = windowWidth;
     stars.height = window.innerHeight;
@@ -47,7 +48,7 @@ export default function ( id ) {
     setTimeout(playStars, 100);
   }
   //页面加载的时候
-  window.onload = function () {
+  // window.onload = function () {
     init();
     //画星星
     for (var i = 0; i < starCount; i++) {
@@ -57,6 +58,5 @@ export default function ( id ) {
       arr.push(star);
     }
     playStars();//绘制闪动的星星
-  }
+  // }
 }
-/*流星雨结束*/

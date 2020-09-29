@@ -30,10 +30,10 @@
 				</div>
 				<div class="white-card article-class">
 					<p class="head"><i class="iconfont iconmulu"></i>文章分类</p>
-					<ul v-if="article_list && article_list.length">
-						<li v-for="(item, index) in article_list" :key="index">
-							<span>{{ item.value }}</span>
-							<span>{{ index }}</span>
+					<ul>
+						<li v-for="(item, index) in webside.tags_count" :key="index">
+							<router-link tag="span" :to="{path: '/categories', query: { class: index }}">{{ index }}</router-link>
+							<span>{{ item }}</span>
 						</li>
 					</ul>
 				</div>
@@ -144,6 +144,11 @@ export default {
 					padding: 0px 1rem;
 					display: flex;
 					justify-content: space-between;
+					span {
+						&:nth-child(1) {
+							cursor: pointer;
+						}
+					}
 				}
 			}
 		}

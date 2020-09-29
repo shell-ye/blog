@@ -60,7 +60,7 @@ export default {
         }
     },
     mounted () {
-        let stars = new star('stars')
+        star('stars')
         var typed = new Typed('.text', {
             strings: this.saying, //输入内容, 支持html标签
             typeSpeed: 100, //打字速度

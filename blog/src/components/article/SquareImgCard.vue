@@ -6,6 +6,9 @@
             <img src="@/assets/img/nodejs.jpg" :alt="article.article_img" v-if="article.article_img == 'Node'">
             <img src="@/assets/img/nuxt.jpg" :alt="article.article_img" v-if="article.article_img == 'Nuxt'">
             <img src="@/assets/img/html.jpg" :alt="article.article_img" v-if="article.article_img == 'HTML+CSS'">
+            <img src="@/assets/img/js.jpg" :alt="article.article_img" v-if="article.article_img == 'Javascript'">
+            <img src="@/assets/img/windows.jpg" :alt="article.article_img" v-if="article.article_img == 'Windows'">
+            <img src="@/assets/img/element_ui.jpg" :alt="article.article_img" v-if="article.article_img == 'ElementUI'">
         </router-link>
         <div class="text">
             <router-link tag="div" :to="article.router" class="title">{{ article.title }}</router-link>

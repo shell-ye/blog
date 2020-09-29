@@ -3,6 +3,8 @@
         <p class="animate__animated animate__fadeInUp">{{ text }}</p>
         <img src="@/assets/img/notes_BG.jpg" alt="" v-if="type == 'notes'">
         <img src="@/assets/img/categories_BG.jpg" alt="" v-if="type == 'categories'">
+        <img src="@/assets/img/author_BG.jpg" alt="" v-if="type == 'author'">
+        <img src="@/assets/img/article_BG.jpg" alt="" v-if="type == 'article'">
     </div>
 </template>
 

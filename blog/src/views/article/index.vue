@@ -1,7 +1,7 @@
 <template>
   <article id="article" ref="article" v-if="article && article.title">
-    <section class="redbg"></section>
-    <section class="container note-content">
+    <HeadBackground text="文章阅读" type="article"></HeadBackground>
+    <section class="container note-content white-card">
       <div class="head">
         <p v-if="tags && tags.length">
           <router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item }}</router-link>
@@ -19,14 +19,9 @@
       </div>
       <div class="content">
         <h2>{{ article.title }}</h2>
-        <div id="note_content" v-if="article && article.html_content" v-html="article.html_content"></div>
+        <!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
+        <div id="note_content" class="markdown-body" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
       </div>
-    </section>
-    <section class="note-catalog">
-      <h3><i class="iconfont iconmulu"></i>目录</h3>
-      <ul v-if="catalog && catalog.length">
-        <router-link v-for="(item,index) in catalog" :key="index" tag="li" :to="{ path: `/article/${ item.id }`}" @click.native="search( item.id )">{{ index + 1 }} . {{ item.title }}</router-link>
-      </ul>
     </section>
   </article>
 </template>
@@ -35,9 +30,11 @@
 import { mapState } from 'vuex'
 import { getStrCount } from '@/utils/index'
 import { article_search,article_like,article_user_like } from '@/axios/article'
+import HeadBackground from '@/components/article/HeadBackground'
 export default {
   data () {
     return {
+      article_show: false,
       article: {},
       tags: [],
       catalog: {},
@@ -51,9 +48,18 @@ export default {
   computed: {
     ...mapState(['userData'])
   },
+  watch: {
+    $route () {
+      this.article_show = false
+    }
+  },
+  components: {
+    HeadBackground
+  },
   methods: {
     async search ( id ) {
       let result = id ? await article_search( 1,id ) : await article_search( 1,this.$route.params.id )
+      this.tags = []
       if ( result.data.code == 200 ) {
         this.article = result.data.data
         for ( let prop in JSON.parse( this.article.article_tags ) ) {
@@ -66,10 +72,9 @@ export default {
     async likedHandler () {
       let result = {}
       if ( this.userData && this.userData.id ) {
-        result = await article_like( 2,this.article.id,!this.likedBool,this.userData.id )
+        result = await article_like( 2, this.article.id, !this.likedBool, this.userData.id )
       } else {
-        if ( this.likedBool )  return
-        result = await article_like( 1,this.article.id,!this.likedBool )
+        result = await article_like( 1, this.article.id, !this.likedBool )
       }
       if ( result.data.code == 200 ) {
         if ( !this.likedBool ) {
@@ -111,6 +116,8 @@ export default {
         this.article.html_content = this.article.html_content.replace('<li><br />','<li>')
         this.article.html_content = this.article.html_content.replace('<br /></li>','</li>')
       }
+      console.log(typeof this.article.html_content)
+      this.article_show = true
     }
   }
 }
@@ -121,26 +128,28 @@ export default {
 #article{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: flex-start;
-  padding-top: 200px;
+  margin-bottom: 60px;
   position: relative;
   section{ z-index: 2;}
-  section.redbg{
-    position: absolute;
-    background: $themeBG;
-    top: 0;
-    width: 100%;
-    height: 300px;
-    z-index: 1;
-  }
   section.note-content{
     background: white;
-    margin: 0;
+    margin-top: -80px;
     .head{
+      border-bottom: none;
+      p {
+        span {
+          margin-right: 10px;
+        }
+      }
       p.class{
         display: flex;
         align-items: center;
       }
+    }
+    .time {
+      width: 100%;
     }
   }
 }

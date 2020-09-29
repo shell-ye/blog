@@ -3,9 +3,9 @@ export default {
         { value: 'HTML+CSS', label: 'HTML+CSS'},
         { value: 'Javascript', label: 'Javascript'},
         { value: 'Vue', label: 'Vue'},
+        { value: 'ElementUI', label: 'ElementUI'},
         { value: 'Git', label: 'Git'},
         { value: 'Node', label: 'Node'},
-        { value: 'Nuxt', label: 'Nuxt'},
         { value: 'Axios', label: 'Axios'},
         { value: 'Windows', label: 'Windows'}
     ],

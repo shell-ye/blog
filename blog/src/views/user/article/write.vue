@@ -2,6 +2,12 @@
   <div id="article_write">   
     <div class="input"><span>标题:</span><el-input size="medium" v-model="title"></el-input></div>
     <div class="input">
+      <span>文章图片:</span>
+      <el-select v-model="article_img" placeholder="请选择">
+        <el-option v-for="item in article_info.article_tags" :key="item.value" :label="item.label" :value="item.value"></el-option>
+      </el-select>
+    </div>
+    <div class="input">
       <span>技能标签:</span>
       <el-select v-model="skill_tag" placeholder="请选择">
         <el-option v-for="item in article_info.skill_tags" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -27,6 +33,7 @@ export default {
     return {      
       article_info: {},
       title: '',
+      article_img: '',
       article_tags: [],
       skill_tag: '',
       content: '',
@@ -77,7 +84,8 @@ export default {
       for ( let prop in this.article_tags ) {
         obj[prop] = this.article_tags[prop]
       }
-      let result = await article_add( that.title,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'))
+      let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'))
+      // let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content )
       if ( result.data.code == 200 ) { this.$message({message: '添加成功'}) }
     })
   },

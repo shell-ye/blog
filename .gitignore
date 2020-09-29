@@ -1,2 +1,4 @@
 /blog/node_modules
+/blog/dist
 /server/node_modules
+/server/utils/email

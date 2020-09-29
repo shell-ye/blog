@@ -10,7 +10,8 @@ import {
     InputNumber,
     Tag,
     Icon,
-    Tooltip 
+    Tooltip,
+    Progress
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -32,5 +33,6 @@ Vue.use(InputNumber);
 Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(Tooltip);
+Vue.use(Progress);
 Vue.component(Button.name, Button)
 Vue.prototype.$message = Mess

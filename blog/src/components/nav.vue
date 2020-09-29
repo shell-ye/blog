@@ -6,7 +6,7 @@
             <ul>
                 <li><router-link to="/" tag="a"><i class="iconfont iconfangzi"></i>首页</router-link></li>
                 <li><router-link :to="{name: 'categories'}" tag="a"><i class="iconfont iconshuben"></i>文章分类</router-link></li>
-                <li>
+                <!-- <li>
                     <router-link to="/notes" tag="a"><i class="iconfont iconbi"></i>学习笔记</router-link>
                     <div class="arrow"></div>
                     <div class="list notes">
@@ -28,10 +28,10 @@
                             git
                         </p>
                     </div>
-                </li>
+                </li> -->
                 <li><router-link :to="{name: 'author'}" tag="a"><i class="iconfont iconzuozhe"></i>关于我</router-link></li>
                 <li v-if="!this.userData || !this.userData.email"><router-link to="/login" tag="a"><i class="iconfont iconzuozhe-"></i>登录</router-link></li>
-                <li v-if="this.userData && this.userData.email"><router-link to="/user/center" tag="a"><img :src="userData.head_img" alt="">{{ userData.name }}</router-link><a @click="logout">退出</a></li>
+                <li v-if="this.userData && this.userData.email" class="user"><router-link to="/user/center" tag="a"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link><a @click="logout">退出</a></li>
             </ul>
         </div>
     </nav>
@@ -119,7 +119,6 @@ $height: 50px;
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
-                    width: 100%;
                     height: 100%;
                     text-align: center;
                     line-height: $height;
@@ -185,10 +184,18 @@ $height: 50px;
                     }
                 }
             }
+            li.user {
+                width: auto;
+                a {
+                    &:first-child {
+                        width: auto;
+                        margin-right: 10px;
+                    }
+                }
+            }
         }
     }
 } 
 
 #nav.nav_shadow{ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); background: #ababab;}
-// #nav.nav_shadow{ bac}
 </style>

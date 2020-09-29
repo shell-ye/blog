@@ -4,7 +4,10 @@
         <section class="white-card container animate__animated animate__slideInUp categories">
             <p class="title"><i class="iconfont iconshuben"></i>文章分类</p>
             <div class="tags">
-                <span v-for="(item, index) in article_tags" :key="index" class="tags-2" :class="{select_article: article == item.value}" @click="article = item.value">{{ item.value }}</span>
+                <!-- <span v-for="(item, index) in article_tags" :key="index" class="tags-2" :class="{select_article: article == item.value}" @click="article = item.value">{{ item.value }}</span> -->
+                <span v-for="(item, index) in tags_count" :key="index" class="tags-2" :class="{select_article: article == index}" @click="article = index">
+                    {{ index }} &nbsp;&nbsp;&nbsp;&nbsp; {{ item }}
+                </span>
             </div>
         </section>
         <section class="article-list container animate__animated animate__slideInUp">
@@ -24,11 +27,12 @@ import { article_list } from '@/axios/article'
 import defaults from '@/defaults'
 import HeadBackground from '@/components/article/HeadBackground'
 import SquareImgCard from '@/components/article/SquareImgCard'
+import { mapGetters } from 'vuex'
 export default {
     name: 'categories',
     data () {
         return {
-            article: 'vue',
+            article: 'HTML+CSS',
             article_tags: [],
             pages: 1,
             max_pages: 1,
@@ -43,8 +47,14 @@ export default {
         this.article_tags = defaults.article_tags
     },
     activated () {
+        if ( this.$route.query && this.$route.query.class ) {
+            this.article = this.$route.query.class
+        }
         this.search()
         this.pageBools()
+    },
+    computed: {
+        ...mapGetters(['tags_count'])
     },
     components: {
         HeadBackground, SquareImgCard

@@ -14,8 +14,7 @@ const sandEmail = async ( email,info ) => {
         //用户信息
         auth:{
             user: '1216814604@qq.com',
-            pass: 'pflczgwhsiznhhaa'
-            // pass: 'yormhwgohojhfigh'
+            pass: 'xzuzjnosqnjhhaea'
         }
     });
   

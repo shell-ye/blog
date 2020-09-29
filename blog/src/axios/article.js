@@ -2,13 +2,14 @@ import request from '@/axios/request'
 import { getCookie } from '@/utils/cookie'
 let token = getCookie('token')
 
-export const article_add = ( title, article_tags, skill_tag, content,html_content ) => {
+export const article_add = ( title, article_img, article_tags, skill_tag, content,html_content ) => {
     return request({
         url: '/article/add',
         method: 'POST',
         data: {
             token,
             title,
+            article_img,
             article_tags,
             skill_tag,
             content,
@@ -63,7 +64,7 @@ export const article_search = ( type,param ) => {
     })
 }
 
-export const article_update = ( id,title,article_tags,skill_tag,content,html_content ) => {
+export const article_update = ( id, title, article_img, article_tags, skill_tag, content, html_content ) => {
     return request({
         url: '/article/update',
         method: 'POST',
@@ -71,6 +72,7 @@ export const article_update = ( id,title,article_tags,skill_tag,content,html_con
             token,
             id,
             title,
+            article_img,
             article_tags,
             skill_tag,
             content,
@@ -89,7 +91,7 @@ export const article_like = ( type,article_id,bool,user_id ) => {
 }
 
 export const article_user_like = ( type,user_id,article_id ) => {
-    // type:    1-查询喜欢列表  2-查询单个
+    // type: 1-查询喜欢列表  2-查询单个
     let p = type == 1 ? { token,type,user_id } : { token,type,user_id,article_id }
     return request({
         url: '/article/user-like',

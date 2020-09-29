@@ -1,7 +1,14 @@
 <template>
     <div class="long-img-card" :style="{flexDirection: index % 2 == 1 ? 'row' : 'row-reverse'}">
         <router-link tag="div" :to="{path: article.router}" class="img">
-            <img src="@/assets/img/git.jpg" alt="">
+            <img src="@/assets/img/git.jpg" :alt="article.article_img" v-if="article.article_img == 'Git'">
+            <img src="@/assets/img/vue.jpg" :alt="article.article_img" v-if="article.article_img == 'Vue'">
+            <img src="@/assets/img/nodejs.jpg" :alt="article.article_img" v-if="article.article_img == 'Node'">
+            <img src="@/assets/img/nuxt.jpg" :alt="article.article_img" v-if="article.article_img == 'Nuxt'">
+            <img src="@/assets/img/html.jpg" :alt="article.article_img" v-if="article.article_img == 'HTML+CSS'">
+            <img src="@/assets/img/js.jpg" :alt="article.article_img" v-if="article.article_img == 'Javascript'">
+            <img src="@/assets/img/windows.jpg" :alt="article.article_img" v-if="article.article_img == 'Windows'">
+            <img src="@/assets/img/element_ui.jpg" :alt="article.article_img" v-if="article.article_img == 'ElementUI'">
         </router-link>
         <div class="context">
             <router-link tag="p" :to="{path: article.router}" class="title">{{ article.title }}</router-link>
@@ -55,7 +62,7 @@ $height: 270px;
         box-sizing: border-box;
         width: 500px;
         .title {
-            font-size: 36px;
+            font-size: 24px;
             font-weight: bold;
             letter-spacing: 2px;
             cursor: pointer;

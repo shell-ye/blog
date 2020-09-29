@@ -15,7 +15,16 @@ const store = new Vuex.Store({
             article_likes_count: 0,
             views_count: 0,
             tell: '暂无公告',
-            create_time: ''
+            create_time: '',
+            tags_count: {
+                'HTML+CSS': 0,
+                Javascript: 0,
+                Node: 0,
+                Vue: 0,
+                Axios: 0,
+                Git: 0,
+                Windows: 0
+            }
         }
     },
     mutations: {
@@ -40,6 +49,9 @@ const store = new Vuex.Store({
     getters: {
         create_time ( state ) {
             return state.webside.create_time
+        },
+        tags_count ( state ) {
+            return state.webside.tags_count
         }
     },
     actions: {
