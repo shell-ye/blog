@@ -6,6 +6,34 @@
   "description": "个人博客",
   "glyphs": [
     {
+      "icon_id": "3776242",
+      "name": "放大镜",
+      "font_class": "fangdajing",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "12544414",
+      "name": "菜单",
+      "font_class": "caidan-",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "10292389",
+      "name": "Mail",
+      "font_class": "Mail",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "12310821",
+      "name": "logo_github",
+      "font_class": "logo_github",
+      "unicode": "e8ec",
+      "unicode_decimal": 59628
+    },
+    {
       "icon_id": "4967940",
       "name": "退出",
       "font_class": "tuichu",

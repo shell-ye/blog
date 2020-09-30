@@ -1,8 +1,10 @@
 <template>
     <nav id="nav" :class="{nav_shadow: show_shadow == 1}">
-        <div>
+        <!-- PC -->
+        <div class="pc" v-if="!isMobile">
             <a href="/" class="logo">
-            <img src="@/assets/img/logo.png" alt=""><span>夏叶博客</span></a>
+                <img src="@/assets/img/logo.png" alt=""><span>夏叶博客</span>
+            </a>
             <ul>
                 <li><router-link to="/" tag="a"><i class="iconfont iconfangzi"></i>首页</router-link></li>
                 <li><router-link :to="{name: 'categories'}" tag="a"><i class="iconfont iconshuben"></i>文章分类</router-link></li>
@@ -34,6 +36,50 @@
                 <li v-if="this.userData && this.userData.email" class="user"><router-link to="/user/center" tag="a"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link><a @click="logout">退出</a></li>
             </ul>
         </div>
+
+        <!-- Mobile -->
+        <div class="mobile" v-if="isMobile">
+            <i class="iconfont iconcaidan-" @click="mobile_menu = true"></i>
+            <a href="/" class="logo">
+                <img src="~@/assets/img/logo.png" alt=""><span>夏叶博客</span>
+            </a>
+            <i class="iconfont iconfangdajing"></i>
+        </div>
+
+        <!-- Mobile Menu -->
+        <el-drawer
+            title="我是标题"
+            :visible.sync="mobile_menu"
+            direction="ltr"
+            size="60%"
+            :append-to-body="true"
+            :with-header="false">
+            <div class="mobile-menu">
+                <div class="about-blog">
+                    <img src="@/assets/img/color_logo.png" alt="">
+                    <div class="name">本站概况</div>
+					<div class="data">
+						<p>
+							<span>{{ webside.article_count }}</span>
+							<span>文章</span>
+						</p>
+						<p>
+							<span>{{ webside.views_count }}</span>
+							<span>浏览量</span>
+						</p>
+						<p>
+							<span>{{ webside.article_likes_count }}</span>
+							<span>点赞</span>
+						</p>
+					</div>
+                </div>
+                <ul class="menu" @click="mobile_menu = false">
+                    <router-link tag="li" to="/"><i class="iconfont iconfangzi"></i>首页</router-link>
+                    <router-link tag="li" to="/categories"><i class="iconfont iconshuben"></i>文章分类</router-link>
+                    <router-link tag="li" to="/author"><i class="iconfont iconzuozhe"></i>关于我</router-link>
+                </ul>
+            </div>
+        </el-drawer>
     </nav>
 </template>
 
@@ -45,7 +91,8 @@ export default {
     name: 'navigation',
     data () {
         return {
-            show_shadow: false
+            show_shadow: false,
+            mobile_menu: false
         }
     },
     mounted () {
@@ -54,7 +101,7 @@ export default {
         })
     },
     computed: {
-        ...mapState(['userData'])
+        ...mapState(['userData', 'isMobile', 'webside'])
     },
     methods: {
         async logout () {
@@ -81,7 +128,7 @@ $height: 50px;
     position: fixed;
     top: 0;
     width: 100%;
-    > div{
+    div.pc {
         display: flex;
         justify-content: space-between;
         height: $height;
@@ -195,7 +242,84 @@ $height: 50px;
             }
         }
     }
+    div.mobile {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 16px;
+        a.logo {
+            color: white;
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+            img {
+                width: 24px;
+                height: 24px;
+                margin-right: 10px;
+            }
+        }
+        i {
+            font-size: 24px;
+            color: white;
+        }
+    }
 } 
+.mobile-menu {
+    div.about-blog {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        background-image: linear-gradient(to right,#0bb7fbd6 0,#0e91d0 100%);
+        padding: 20px 0;
+        color: white;
+        img {
+            width: 64px;
+            height: 64px;
+        }
+        .name {
+            font-size: 20px;
+            margin: 20px 0px 20px 0px;
+        }
+        .data {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            p {
+                display: flex;
+                flex-direction: column;
+                &:nth-child(2) {
+                    margin: 0px 40px;
+                }
+                span {
+                    &:first-child {
+                        margin-bottom: 10px;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+    ul.menu {
+        width: 100%;
+        li {
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 20px;
+            height: 40px;
+            line-height: 40px;
+            i {
+                margin-right: 10px;
+                font-size: 20px;
+                align-items: center;
+            }
+        }
+    }
+}
 
 #nav.nav_shadow{ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); background: #ababab;}
 </style>

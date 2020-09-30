@@ -11,7 +11,8 @@ import {
     Tag,
     Icon,
     Tooltip,
-    Progress
+    Progress,
+    Drawer
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -34,5 +35,6 @@ Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(Tooltip);
 Vue.use(Progress);
+Vue.use(Drawer);
 Vue.component(Button.name, Button)
 Vue.prototype.$message = Mess

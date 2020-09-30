@@ -39,4 +39,14 @@ export default {
         }
     }
 }
+
+// 移动端
+@media screen and (max-width: 1024px) {
+    footer {
+        font-size: 12px;
+        p {
+            letter-spacing: 1px!important;
+        }
+    }
+}
 </style>

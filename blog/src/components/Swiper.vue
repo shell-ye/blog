@@ -36,6 +36,7 @@
 import { slider, slideritem } from 'vue-concise-slider' // import slider components
 import star from "@/assets/js/star.js"
 import Typed from 'typed.js'
+import { mapState } from 'vuex'
 export default {
     props: ['size'],
     data () {
@@ -44,7 +45,7 @@ export default {
                 currentPage: 0,
                 thresholdDistance: 100,
                 thresholdTime: 3000,
-                autoplay: 5000,
+                // autoplay: 5000,
                 loop:true,
                 direction:'horizontal',
                 loopedSlides:1,
@@ -62,6 +63,7 @@ export default {
     mounted () {
         star('stars')
         var typed = new Typed('.text', {
+            showCursor: this.isMobile ? false : true,
             strings: this.saying, //输入内容, 支持html标签
             typeSpeed: 100, //打字速度
             backSpeed: 50, //回退速度
@@ -70,6 +72,9 @@ export default {
     },
     components: {
         slider, slideritem
+    },
+    computed: {
+        ...mapState(['isMobile'])
     },
     methods: {
         toRead () {
@@ -187,12 +192,30 @@ export default {
     }
 }
 
+// 小屏幕
 @media screen and (max-width: 1377px) {
     p.name {
         margin-top: 100px!important;
     }
     p.btn-list {
         margin: 250px 0 40px 0!important;
+    }
+}
+
+// 移动端
+@media screen and (max-width: 1024px) {
+    .big .page2,.big .page1 {
+        background-size: auto 100%;
+        background-position: center;
+        p.text {
+            font-size: 16px;
+            letter-spacing: normal;
+        }
+        button {
+            width: 120px!important;
+            height: 46px!important;
+            margin: 0 20px!important;
+        }
     }
 }
 </style>

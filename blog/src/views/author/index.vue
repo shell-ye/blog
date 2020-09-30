@@ -187,4 +187,29 @@ export default {
         }
     }
 }
+
+@media screen and (max-width: 1024px) {
+    #author {
+        section {
+            width: 90%;
+            padding: 0;
+            div.section {
+                div.long, div.circle {
+                    flex-wrap: wrap;
+                    > div {
+                        width: 100%;
+                    }
+                }
+                div.circle {
+                    > div {
+                        margin-bottom: 20px;
+                    }
+                }
+                div.program {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
 </style>

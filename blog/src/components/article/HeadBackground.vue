@@ -37,4 +37,12 @@ export default {
         text-shadow: 4px 4px 8px black;
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .head-background {
+        img {
+            width: unset;
+        }
+    }
+}
 </style>

@@ -10,6 +10,7 @@ const store = new Vuex.Store({
         token: '',
         userData: {},
         article_id: '',
+        isMobile: false,
         webside: {
             article_count: 0,
             article_likes_count: 0,
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
         },
         setWebsideInfo ( state, data ) {
             state.webside = data
+        },
+        changeIsMobile ( state, data ) {
+            state.isMobile = data
         }
     },
     getters: {

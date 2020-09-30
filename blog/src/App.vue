@@ -34,6 +34,7 @@ export default {
 		}
 		this.changeShow()
 		addViews()
+		this.checkMobile()
 	},
 	watch: {
 		$route () {
@@ -49,6 +50,13 @@ export default {
 				this.nav_foot_show = false
 			} else {
 				this.nav_foot_show = true
+			}
+		},
+		checkMobile () {
+			if ( (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) ) {
+				this.$store.commit('changeIsMobile', true)
+			} else {
+				this.$store.commit('changeIsMobile', false)
 			}
 		}
 	}

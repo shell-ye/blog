@@ -11,7 +11,7 @@
             </div>
         </section>
         <section class="article-list container animate__animated animate__slideInUp">
-            <SquareImgCard v-for="(item, index) in list" :key="index" :article="item"></SquareImgCard>
+            <LongImgCard v-for="(item, index) in list" :key="index" :article="item" shape="square"></LongImgCard>
         </section>
         <section class="paging container" v-if="list && list.length && max_pages != 1">
             <p class="circle left" @click="pages--" :class="{disabled: decreaseBool}"><i class="el-icon-arrow-left"></i></p>
@@ -26,8 +26,8 @@ import bus from '@/utils/bus'
 import { article_list } from '@/axios/article'
 import defaults from '@/defaults'
 import HeadBackground from '@/components/article/HeadBackground'
-import SquareImgCard from '@/components/article/SquareImgCard'
-import { mapGetters } from 'vuex'
+import LongImgCard from '@/components/article/LongImgCard'
+import { mapGetters, mapState } from 'vuex'
 export default {
     name: 'categories',
     data () {
@@ -40,7 +40,7 @@ export default {
             increaseBool: false,
             list: [
                 { router: '/article/000001', title: 'vue基础', time: '2020-07-10', class: '前端' } // 改造后的数据样板
-            ]
+            ],
         }
     },
     mounted () {
@@ -54,10 +54,11 @@ export default {
         this.pageBools()
     },
     computed: {
-        ...mapGetters(['tags_count'])
+        ...mapGetters(['tags_count']),
+        ...mapState(['isMobile'])
     },
     components: {
-        HeadBackground, SquareImgCard
+        HeadBackground, LongImgCard
     },
     watch: {
         article () {
@@ -72,14 +73,15 @@ export default {
     },
     methods: {
         async search () {
-            let result = await article_list( 2,this.pages,12,this.article )
+            let on_page_count = this.isMobile ? 6 : 12
+            let result = await article_list( 2, this.pages, on_page_count, this.article )
             if ( result.data.code == 200 ) {
                 result.data.data.forEach(item => {
                     item.router = `/article/${ item.id }`
                     item.update_time = item.update_time.substr(0,10)
                 });
                 this.list = result.data.data
-                this.max_pages = Math.ceil( result.data.pages_info.count / 12 )
+                this.max_pages = Math.ceil( result.data.pages_info.count / on_page_count )
             }
         },
         pageBools () {
@@ -107,6 +109,8 @@ export default {
         }
         div.tags{
             margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
             > span:nth-child(1){ background: #F5EEF8;}
             > span:nth-child(2){ background: #F9EBEA;}
             > span:nth-child(3){ background: #D7BDE2;}

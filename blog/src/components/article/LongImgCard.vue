@@ -1,5 +1,13 @@
 <template>
-    <div class="long-img-card" :style="{flexDirection: index % 2 == 1 ? 'row' : 'row-reverse'}">
+    <div 
+        :class="{
+            long_img_card: shape == 'long',
+            square_img_card: shape == 'square'
+        }" 
+        :style="{
+            flexDirection: shape == 'long' && index % 2 == 1 ? 'row' : 'row-reverse'
+        }"
+    >
         <router-link tag="div" :to="{path: article.router}" class="img">
             <img src="@/assets/img/git.jpg" :alt="article.article_img" v-if="article.article_img == 'Git'">
             <img src="@/assets/img/vue.jpg" :alt="article.article_img" v-if="article.article_img == 'Vue'">
@@ -16,20 +24,20 @@
                 <span class="time"><i class="iconfont icontime"></i>{{ article.update_time }}</span>
                 <span class="tag"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</span>
             </p>
-            <p class="describe">{{ article.html }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-    props: ['article', 'index']
+    props: ['article', 'index', 'shape']
 }
 </script>
 
 <style lang="scss" scoped>
 $height: 270px;
-.long-img-card {
+.long_img_card {
     width: 900px;
     height: $height;
     margin: 40px;
@@ -83,6 +91,59 @@ $height: 270px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+    }
+}
+
+.square_img_card {
+    width: 350px;
+    height: 320px;
+    background: white;
+    font-size: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 25px;
+    transition: .4s;
+    box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+    &:hover{
+        box-shadow: 0 4px 12px 12px rgba(7,17,27,0.15);
+    }
+    > div{ overflow: hidden;}
+    img{
+        width: 100%;
+        height: 218px;
+        cursor: pointer;
+        transition: .5s;
+        &:hover{ transform: scale(1.2);}
+    }
+    .context{
+        height: 102px;
+        font-size: 16px;
+        line-height: 42px;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        position: relative;
+        align-items: center;
+        .title{
+            font-size: 16px!important;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .details{
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            p{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .square_img_card {
+        margin: 25px 0!important;
     }
 }
 </style>

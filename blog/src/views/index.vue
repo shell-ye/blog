@@ -3,10 +3,10 @@
         <Swiper size="big"></Swiper>
         <section class="article">
 			<div class="article-list">
-          		<LongImgCard v-for="(item, index) in lately" :key="index" :index="index" :article="item"></LongImgCard>
+          		<LongImgCard v-for="(item, index) in lately" :key="index" :index="index" :article="item" :shape="isMobile ? 'square' : 'long'"></LongImgCard>
 			</div>
 			<div class="info">
-				<div class="white-card about-blog">
+				<div class="white-card about-blog" v-if="!isMobile">
 					<img src="@/assets/img/color_logo.png" alt="">
 					<div class="name">本站概况</div>
 					<div class="data">
@@ -53,10 +53,7 @@ export default {
 	data () {
 		return {
 			lately: [
-				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
-				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
-				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'},
-				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字描述为名字'}
+				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字'}
 			],
 			article_list: []
 		}
@@ -73,7 +70,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['webside'])
+		...mapState(['webside', 'isMobile'])
 	},
 	components: {
 		Swiper, LongImgCard
@@ -157,4 +154,21 @@ export default {
 
 .animate__zoomInDown{ animation-delay: .5s;}
 .animate__slideInUp{ animation-delay: 1s;}
+
+// 移动端
+@media screen and (max-width: 1024px) {
+    .article {
+		flex-wrap: wrap;
+		flex-direction: column-reverse;
+		> div {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			> div {
+				width: 350px!important;
+				margin: 20px 0!important;
+			}
+		}
+	}
+}
 </style>
