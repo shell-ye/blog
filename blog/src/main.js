@@ -10,8 +10,6 @@ import { setCookie } from './utils/cookie'
 import './element-ui'
 import './filter'
 
-
-
 // 公用样式
 import '@/assets/css/common.scss'
 import '@/assets/css/theme.scss'

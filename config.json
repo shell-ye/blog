@@ -1,6 +1,6 @@
 {
-    "nouse_server_URL": "http://121.196.34.102:3002",
-    "server_URL": "http://127.0.0.1:3002",
+    "server_URL": "http://121.196.34.102:3002",
+    "nouse_server_URL": "http://127.0.0.1:3002",
     "server_port": "3002",
     "nuxt_port": "8000"
 }

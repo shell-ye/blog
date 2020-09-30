@@ -8,29 +8,30 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "element-ui": "^2.13.2",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^3.6.4",
+    "css-loader": "^3.4.2",
+    "element-ui": "^2.13.0",
+    "jsdom": "^16.2.2",
+    "location": "0.0.1",
     "mavon-editor": "^2.9.0",
+    "navigator": "^1.0.1",
     "nprogress": "^0.2.0",
     "typed.js": "^2.0.11",
     "vue": "^2.6.11",
     "vue-concise-slider": "^3.4.4",
-    "vue-router": "^3.2.0",
-    "babel-polyfill": "^6.26.0",
-    "vuex": "^3.5.1"
+    "vue-router": "^3.1.5",
+    "vuex": "^3.3.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.11.5",
-    "@vue/cli-plugin-router": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
+    "@babel/preset-env": "^7.11.0",
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
     "babel-plugin-component": "^1.1.1",
-    "babel-polyfill": "^6.26.0",
-    "css-loader": "^3.6.0",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^9.0.2",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  }
 }
