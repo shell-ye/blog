@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import bus from '@/utils/bus'
+import bus from '@/bus'
 import defaults from '@/defaults/index'
 import { article_search,article_update } from '@/axios/article'
 
@@ -92,9 +92,9 @@ export default {
     },
     async activated () {
         this.article_info = defaults 
-        if ( this.$store.state.article_id ) {
+        if ( this.$store.state.article.article_id ) {
             // search: 1-id
-            let result = await article_search(1,this.$store.state.article_id)
+            let result = await article_search(1,this.$store.state.article.article_id)
             if ( result.data.code == 200 ) {
                 this.title = result.data.data.title
                 this.article_img = result.data.data.article_img

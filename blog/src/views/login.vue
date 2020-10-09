@@ -105,7 +105,7 @@ export default {
                         type: 'success',
                         message: '登录成功'
                     })
-                    this.$store.commit('setUserData',result.data.data)
+                    this.$store.commit('webside/setUserData',result.data.data)
                     this.$router.go(-1)
                 }
             }

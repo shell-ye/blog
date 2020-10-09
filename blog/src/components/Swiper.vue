@@ -45,7 +45,7 @@ export default {
                 currentPage: 0,
                 thresholdDistance: 100,
                 thresholdTime: 3000,
-                // autoplay: 5000,
+                autoplay: 5000,
                 loop:true,
                 direction:'horizontal',
                 loopedSlides:1,
@@ -74,7 +74,9 @@ export default {
         slider, slideritem
     },
     computed: {
-        ...mapState(['isMobile'])
+        ...mapState({
+            'isMobile': state => state.webside.isMobile
+        })
     },
     methods: {
         toRead () {

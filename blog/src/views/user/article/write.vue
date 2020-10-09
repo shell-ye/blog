@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import bus from '@/utils/bus'
+import bus from '@/bus'
 import defaults from '@/defaults/index'
 import { article_add } from '@/axios/article'
 

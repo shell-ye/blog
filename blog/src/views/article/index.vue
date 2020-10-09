@@ -46,7 +46,9 @@ export default {
 		await this.search()
 	},
 	computed: {
-		...mapState(['userData'])
+		...mapState({
+            'userData': state => state.webside.userData
+        })
 	},
 	watch: {
 		$route () {

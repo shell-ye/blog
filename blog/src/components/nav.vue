@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import bus from '@/utils/bus'
+import bus from '@/bus'
 import { mapState } from 'vuex'
 import { log_out } from '@/axios/user'
 export default {
@@ -101,13 +101,17 @@ export default {
         })
     },
     computed: {
-        ...mapState(['userData', 'isMobile', 'webside'])
+        ...mapState({
+            'userData': state => state.webside.userData,
+            'isMobile': state => state.webside.isMobile,
+            'webside': state => state.webside.webside
+        })
     },
     methods: {
         async logout () {
             let result = await log_out()
             if ( result.data.code == 200 ) {
-                this.$store.commit('setUserData',{})
+                this.$store.commit('webside/setUserData',{})
                 if ( window.location.href.indexOf('/user') != -1 ) { this.$router.push('/') }
             }
         },

@@ -3,7 +3,8 @@
         <Swiper size="big"></Swiper>
         <section class="article">
 			<div class="article-list">
-          		<LongImgCard v-for="(item, index) in lately" :key="index" :index="index" :article="item" :shape="isMobile ? 'square' : 'long'"></LongImgCard>
+          		<ImgCard v-for="(item, index) in lately" :key="index" :index="index" :article="item" :shape="isMobile ? 'square' : 'long'"></ImgCard>
+				<PagingPage v-if="article_list.data && article_list.data.length" :max_pages="Math.ceil(article_list.pages_info.count / 4)" @increase="page++" @decrease="page--"></PagingPage>
 			</div>
 			<div class="info">
 				<div class="white-card about-blog" v-if="!isMobile">
@@ -45,9 +46,10 @@
 <script>
 import defaults from '@/defaults'
 import Swiper from '@/components/Swiper'
-import LongImgCard from '@/components/article/LongImgCard'
+import ImgCard from '@/components/article/ImgCard'
+import PagingPage from '@/components/article/PagingPage'
 import { article_list } from '@/axios/article'
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
 	name: 'index',
 	data () {
@@ -55,25 +57,47 @@ export default {
 			lately: [
 				{title: 'Vue', time: '2020-02-02', tag: 'vue', describe: '描述为名字'}
 			],
-			article_list: []
+			page: 1
 		}
 	},
 	async mounted () {
-		this.article_list = defaults.article_tags
-		let result = await article_list( 1, 1, 4 )
-		if ( result.data.code == 200 ) {
-			this.lately = result.data.data
+		await this.getArticleList()
+	},
+	computed: {
+		...mapState({
+            'isMobile': state => state.webside.isMobile,
+			'webside': state => state.webside.webside
+		}),
+		...mapGetters(
+			'article', {
+				article_list: 'article_list'
+			}
+		)
+	},
+	watch: {
+		page () {
+			this.getArticleList()
+		}
+	},
+	components: {
+		Swiper, ImgCard, PagingPage
+	},
+	methods: {
+		changeShowList () {
+			this.lately = this.article_list.data
 			this.lately.forEach(item => {
 				item.update_time = item.update_time.substr(0,10)
 				item.router = `/article/${ item.id }`
 			})
+		},
+		async getArticleList () {
+			await this.$store.dispatch('article/getArticleList', {
+				type: 1,
+				page: this.page,
+				page_count: 4
+			})
+			this.changeShowList()
 		}
-	},
-	computed: {
-		...mapState(['webside', 'isMobile'])
-	},
-	components: {
-		Swiper, LongImgCard
 	}
 }
 </script>
@@ -84,6 +108,7 @@ export default {
 .article {
 	display: flex;
 	justify-content: center;
+	padding-bottom: 20px;
 	.info {
 		> * {
 			width: 280px;

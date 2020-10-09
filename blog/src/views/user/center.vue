@@ -69,7 +69,6 @@
 import { mapState } from 'vuex'
 import { article_user_like } from '@/axios/article'
 import { upload_head_img,update_user_info } from '@/axios/user'
-const config = require('./../../../../config.json')
 export default {
     name: 'usercenter',
     data () {
@@ -93,20 +92,22 @@ export default {
       }
     },
     mounted () {
-      this.upload_addr = config.server_URL + '/upload/heads'
+      this.upload_addr = AXIOS_URL + '/upload/heads'
       this.changeInfo()
     },
     activated () {
       this.likeList()
     },
     computed: {
-      ...mapState(['userData'])
+      ...mapState({
+            'userData': state => state.webside.userData
+        })
     },
     methods: {
       async submit () {
         let result = await update_user_info( this.user.name,this.user.saying,this.user.qq,this.user.git,this.user.weibo,this.user.bilibili )
         if ( result.data.code == 200 ) {
-          this.$store.commit('setUserData', result.data.data)
+          this.$store.commit('webside/setUserData', result.data.data)
           this.$message({ message: '更新成功'})
           this.changeInfo()
           this.edit_user = false
@@ -117,10 +118,10 @@ export default {
         if ( !upload.files[0] ) { return this.$message({ type: 'error', message: '您还未选择图片'})}
         let params = new FormData()
         params.append( 'head_img',upload.files[0] )
-        params.append( 'token',this.$store.state.token )
+        params.append( 'token',this.$store.state.webside.token )
         let result = await upload_head_img( params )
         if ( result.data.code == 200 ) {
-          this.$store.commit('setUserData', result.data.data)
+          this.$store.commit('webside/setUserData', result.data.data)
           this.$message({ message: '更换成功'})
         }
       },

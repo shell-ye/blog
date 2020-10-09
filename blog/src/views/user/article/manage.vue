@@ -25,7 +25,7 @@
         <li v-for="(item,index) in article_list" :key="item.id" v-if="article_list && article_list.length">
           <div>{{ item.id }}</div>
           <div>{{ item.title }}</div>
-          <div>{{ item.article_class }}</div>
+          <div>{{ item.skill_tag }}</div>
           <div>{{ item.likes_count }}</div>
           <div>{{ item.view_count }}</div>
           <div>{{ item.publish_time | timeDate }}</div>
@@ -105,7 +105,7 @@ export default {
       }
     },
     update ( id ) {
-      this.$store.commit('changeArticleID',id)
+      this.$store.commit('article/changeArticleID',id)
       this.$router.push({ path: '/user/article/update', query: {id}})
     },
     handleChange () {

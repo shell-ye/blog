@@ -13,13 +13,12 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { user_info } from '@/axios/user'
 import { getCookie } from '@/utils/cookie'
-import { addViews, init } from '@/axios/web'
 export default {
 	async beforeCreate () {
-		this.$store.commit('setToken', getCookie('token'))
+		this.$store.commit('webside/setToken', getCookie('token'))
 		let result = await user_info( this.$store.state.token )
 		if ( result.data.code == 200 ) {
-			this.$store.commit('setUserData', result.data.data)
+			this.$store.commit('webside/setUserData', result.data.data)
 		}
 	},
 	data () {
@@ -28,12 +27,8 @@ export default {
 		}
 	},
 	async mounted () {
-		let result = await init()
-		if ( result.data.code == 200 ) {
-			this.$store.commit('setWebsideInfo', result.data.data)
-		}
+		this.$store.dispatch('webside/getWebsideInfo')
 		this.changeShow()
-		addViews()
 		this.checkMobile()
 	},
 	watch: {
@@ -54,9 +49,9 @@ export default {
 		},
 		checkMobile () {
 			if ( (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) ) {
-				this.$store.commit('changeIsMobile', true)
+				this.$store.commit('webside/changeIsMobile', true)
 			} else {
-				this.$store.commit('changeIsMobile', false)
+				this.$store.commit('webside/changeIsMobile', false)
 			}
 		}
 	}

@@ -14,7 +14,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['create_time'])
+        ...mapGetters(
+            'webside', {
+                create_time: 'create_time'
+            }
+        )
     },
 }
 </script>

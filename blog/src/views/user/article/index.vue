@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import bus from '@/utils/bus'
+import bus from '@/bus'
 export default {
   data () {
     return {

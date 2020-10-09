@@ -1,6 +1,5 @@
 import 'babel-polyfill'
 import babel from 'babel-polyfill'
-const config = require('./../../config.json')
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -37,7 +36,7 @@ import './assets/css/markdown.css'
 Vue.config.productionTip = false
 Vue.use(babel)
 
-axios.get(`${ config.server_URL }/user/token`).then(data => {
+axios.get(`${ AXIOS_URL }/user/token`).then(data => {
   setCookie('token', data.data.data)
   new Vue({
     router,

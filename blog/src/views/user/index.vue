@@ -26,10 +26,12 @@ import { mapState } from 'vuex'
 export default {
 	name: 'user_menu',
 	computed: {
-		...mapState(['userData'])
+		...mapState({
+            'userData': state => state.webside.userData
+        })
 	},
 	mounted () {
-		if ( !this.$store.state.userData.name ) {
+		if ( !this.$store.state.webside.userData.name ) {
 			this.$router.push('/login')
 		}
 		this.$message({message: '欢迎回来 o≥v≤o'})

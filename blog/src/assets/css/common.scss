@@ -343,30 +343,6 @@ a{ outline: none!important;}
     }
 }
 
-// 分页
-.paging{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 60px;
-    .circle{
-        height: 50px;
-        width: 50px;
-        border-radius: 25px;
-        background: $themeBG;
-        text-align: center;
-        line-height: 50px;
-        color: white;
-        font-weight: bolder;
-        font-size: 24px;
-        cursor: pointer;
-    }
-    .page{
-        font-size: 20px;
-    }
-    .disabled{ cursor: not-allowed;}
-}
-
 /* animate */
 @keyframes shake {
     0%{-webkit-transform:scale(1);}

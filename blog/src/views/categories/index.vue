@@ -11,22 +11,18 @@
             </div>
         </section>
         <section class="article-list container animate__animated animate__slideInUp">
-            <LongImgCard v-for="(item, index) in list" :key="index" :article="item" shape="square"></LongImgCard>
-        </section>
-        <section class="paging container" v-if="list && list.length && max_pages != 1">
-            <p class="circle left" @click="pages--" :class="{disabled: decreaseBool}"><i class="el-icon-arrow-left"></i></p>
-            <p class="page">{{ pages }} / {{ max_pages }}</p>
-            <p class="circle right" @click="pages++" :class="{disabled: increaseBool}"><i class="el-icon-arrow-right"></i></p>
+            <ImgCard v-for="(item, index) in list" :key="index" :article="item" shape="square"></ImgCard>
+            <PagingPage v-if="article_list.data && article_list.data.length" :max_pages="Math.ceil(article_list.pages_info.count / 4)" @increase="page++" @decrease="page--"></PagingPage>
         </section>
   </article>
 </template>
 
 <script>
-import bus from '@/utils/bus'
 import { article_list } from '@/axios/article'
 import defaults from '@/defaults'
 import HeadBackground from '@/components/article/HeadBackground'
-import LongImgCard from '@/components/article/LongImgCard'
+import ImgCard from '@/components/article/ImgCard'
+import PagingPage from '@/components/article/PagingPage'
 import { mapGetters, mapState } from 'vuex'
 export default {
     name: 'categories',
@@ -34,10 +30,7 @@ export default {
         return {
             article: 'HTML+CSS',
             article_tags: [],
-            pages: 1,
-            max_pages: 1,
-            decreaseBool: true,
-            increaseBool: false,
+            page: 1,
             list: [
                 { router: '/article/000001', title: 'vue基础', time: '2020-07-10', class: '前端' } // 改造后的数据样板
             ],
@@ -51,49 +44,51 @@ export default {
             this.article = this.$route.query.class
         }
         this.search()
-        this.pageBools()
     },
     computed: {
-        ...mapGetters(['tags_count']),
-        ...mapState(['isMobile'])
+        ...mapGetters(
+            'webside', {
+                tags_count: 'tags_count'
+            },
+        ),
+        ...mapGetters(
+			'article', {
+				article_list: 'article_list'
+			}
+		),
+        ...mapState({
+            'isMobile': state => state.webside.isMobile
+        })
     },
     components: {
-        HeadBackground, LongImgCard
+        HeadBackground, ImgCard, PagingPage
     },
     watch: {
         article () {
             this.pages = 1
             this.search()
-            this.pageBools()
         },
         pages () {
-            this.pageBools()
             this.search()
         }
     },
     methods: {
         async search () {
             let on_page_count = this.isMobile ? 6 : 12
-            let result = await article_list( 2, this.pages, on_page_count, this.article )
-            if ( result.data.code == 200 ) {
-                result.data.data.forEach(item => {
-                    item.router = `/article/${ item.id }`
-                    item.update_time = item.update_time.substr(0,10)
-                });
-                this.list = result.data.data
-                this.max_pages = Math.ceil( result.data.pages_info.count / on_page_count )
-            }
+            await this.$store.dispatch('article/getArticleList', {
+				type: 2,
+				page: this.page,
+                page_count: on_page_count,
+                article_tags: this.article
+            })
+            this.changeArticleShow()
         },
-        pageBools () {
-            if ( this.pages < 0 ) {
-                this.pages = 1
-            } else if ( this.pages == 1 && this.pages != this.max_pages ) {
-                this.decreaseBool = true
-                this.increaseBool = false
-            } else if ( this.pages != 1 && this.pages == this.max_pages ) {
-                this.decreaseBool = false
-                this.increaseBool = true
-            }
+        changeArticleShow () {
+            this.list = this.article_list.data
+            this.list.forEach(item => {
+                item.router = `/article/${ item.id }`
+                item.update_time = item.update_time.substr(0,10)
+            })
         }
     }
 }
@@ -102,6 +97,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/theme.scss';
 #categories{
+    padding-bottom: 20px;
     section.categories{
         margin: 40px auto;
         .title {
