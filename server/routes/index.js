@@ -16,7 +16,7 @@ router.get('/init', async (req, res) => {
     return
   })
   // 文章点赞数
-  let article_likes_count = await db.select('count(likes_count)').from('article').queryValue().catch(err => {
+  let article_likes_count = await db.select('sum(likes_count)').from('article').queryValue().catch(err => {
     console.log(err)
     res.send({code: 0, msg: '系统繁忙'})
     return
@@ -55,20 +55,10 @@ router.get('/init', async (req, res) => {
     }
   }
   res.send({code: 200, data: webInit})
-})
-
-// 增加浏览量
-router.get('/views', async (req, res) => {
-  let result = await db.update('webside').column('views', db.literal('views + 1')).where('id', 1).execute().catch(err => {
-    console.log(err)
-    res.send({code: 0, msg: '系统繁忙'})
-    return
-  })
-  res.send({code: 200})
+  // 增加浏览量
+  db.update('webside').column('views', db.literal('views + 1')).where('id', 1).execute()
   if ( req.session && req.session.email ) {
-    db.update('user').column('looked', db.literal('looked + 1')).where('email', req.session && req.session.email).execute().catch(err => {
-      console.log( err )
-    })
+    db.update('user').column('looked', db.literal('looked + 1')).where('email', req.session && req.session.email).execute()
   }
 })
 
