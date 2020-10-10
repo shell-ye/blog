@@ -8,7 +8,7 @@
             flexDirection: shape == 'long' && index % 2 == 1 ? 'row' : 'row-reverse'
         }"
     >
-        <router-link tag="div" :to="{path: article.router}" class="img">
+        <router-link tag="div" :to="{path: `/article/${ article.id }`}" class="img">
             <img src="@/assets/img/git.jpg" :alt="article.article_img" v-if="article.article_img == 'Git'">
             <img src="@/assets/img/vue.jpg" :alt="article.article_img" v-if="article.article_img == 'Vue'">
             <img src="@/assets/img/nodejs.jpg" :alt="article.article_img" v-if="article.article_img == 'Node'">
@@ -21,7 +21,7 @@
         <div class="context">
             <router-link tag="p" :to="{path: article.router}" class="title">{{ article.title }}</router-link>
             <p class="details">
-                <span class="time"><i class="iconfont icontime"></i>{{ article.update_time }}</span>
+                <span class="time" v-if="article.update_time"><i class="iconfont icontime"></i>{{ article.update_time.substr(0,10) }}</span>
                 <span class="tag"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</span>
             </p>
         </div>

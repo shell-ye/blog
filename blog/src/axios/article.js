@@ -19,12 +19,14 @@ export const article_add = ( title, article_img, article_tags, skill_tag, conten
 }
 
 export const article_list = ( type, pages, page_count, article_tags ) => {
-    // type: 1-查询全部     2-按类查询
+    // type: 1-查询全部     2-按类查询  3-关键字查询
     let p = {}
     if ( type == 1 ) {
         p = { token, type, pages, page_count}
     } else if ( type == 2 ) {
         p = { token, type, pages, page_count, article_tags}
+    } else if ( type == 3 ) {
+        p = { token, type, pages }
     }
     return request({
         url: '/article/list',

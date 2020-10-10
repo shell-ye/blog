@@ -6,3 +6,7 @@ export const getStrCount = (scrstr,armstr) => { //scrstr 源字符串 armstr 特
     }
     return count;
 }
+
+export const addArticleRoute = ( article_list ) => {
+    
+}

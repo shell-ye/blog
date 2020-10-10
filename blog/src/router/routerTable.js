@@ -22,6 +22,9 @@ const Author = () => import(/* webpackChunkName: "group-foo" */ '../views/author
 // categories
 const Categories = () => import(/* webpackChunkName: "group-foo" */ '../views/categories/index.vue')
 
+// search
+const Search = () => import(/* webpackChunkName: "group-foo" */ '../views/Search/index.vue')
+
 const routeTable = [
     { path: '/', redirect: '/index'},
     { path: '/index', component: Index, name: 'index'},
@@ -37,7 +40,8 @@ const routeTable = [
     { path: '/article/:id', component: Article, name: 'article'},
     { path: '/notes', component: Notes, name: 'notes'},
     { path: '/author', component: Author, name: 'author'},
-    { path: '/categories', component: Categories, name: 'categories'}
+    { path: '/categories', component: Categories, name: 'categories'},
+    { path: '/search', component: Search, name: 'search'}
 ]
 
 // 导出路由表

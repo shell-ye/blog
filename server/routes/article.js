@@ -26,9 +26,9 @@ router.post('/add', token_verification, async (req, res) => {
 })
 
 router.get('/list', async (req, res) => {
-    // 1 查询全部 2 分类查询（标签）
+    // 1 查询全部 2 分类查询（标签）3 关键字查询
     const { type, pages, page_count, article_tags } = req.query
-    if ( !type || !pages || !page_count ) { return res.send({ code: '000020', msg: '缺少参数'}) }
+    if ( !type || !pages ) { return res.send({ code: '000020', msg: '缺少参数'}) }
     // 查找文章总数
     let count = type == 1 
     ? await db.select('count(*)').from('article').queryValue().catch(err => {
@@ -43,19 +43,32 @@ router.get('/list', async (req, res) => {
     })
 
     // 文章
-    let article = type == 1 
-    ? await db.select('*').from('article').orderby('update_time desc').queryListWithPaging(pages, page_count).catch(err => {
-        console.log( err )
-        res.send({code: 0, msg: '系统繁忙'})
-        return
-    })
-    : await db.select('*').from('article').where('article_tags', article_tags, 'like').orderby('update_time desc').queryListWithPaging(pages, page_count).catch(err => {
-        console.log( err )
-        res.send({code: 0, msg: '系统繁忙'})
-        return
-    })
-
-    res.send({code: 200, data: article.rows, pages_info: { count, pages }})
+    let article = {}
+    if ( type == 1  ) {
+        article = await db.select('*').from('article').orderby('update_time desc').queryListWithPaging(pages, page_count).catch(err => {
+            console.log( err )
+            res.send({code: 0, msg: '系统繁忙'})
+            return
+        })
+    } else if ( type == 2 ) {
+        article = await db.select('*').from('article').where('article_tags', article_tags, 'like').orderby('update_time desc').queryListWithPaging(pages, page_count).catch(err => {
+            console.log( err )
+            res.send({code: 0, msg: '系统繁忙'})
+            return
+        })
+    } else if ( type == 3 ) {
+        article = await db.select('*').from('article').where('title', pages, 'like').orderby('update_time desc').queryList().catch(err => {
+            console.log( err )
+            res.send({code: 0, msg: '系统繁忙'})
+            return
+        })
+    }
+    
+    if ( type == 1 || type == 2 ) {
+        res.send({code: 200, data: article.rows, pages_info: { count, pages }})
+    } else if ( type == 3 ) {
+        res.send({code: 200, data: article})
+    }
 })
 
 router.get('/del', token_verification, (req, res) => {

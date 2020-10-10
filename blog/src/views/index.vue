@@ -83,20 +83,13 @@ export default {
 		Swiper, ImgCard, PagingPage
 	},
 	methods: {
-		changeShowList () {
-			this.lately = this.article_list.data
-			this.lately.forEach(item => {
-				item.update_time = item.update_time.substr(0,10)
-				item.router = `/article/${ item.id }`
-			})
-		},
 		async getArticleList () {
 			await this.$store.dispatch('article/getArticleList', {
 				type: 1,
 				page: this.page,
 				page_count: 4
 			})
-			this.changeShowList()
+			this.lately = this.article_list.data
 		}
 	}
 }

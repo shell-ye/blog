@@ -7,6 +7,7 @@
             </a>
             <ul>
                 <li><router-link to="/" tag="a"><i class="iconfont iconfangzi"></i>首页</router-link></li>
+                <li><router-link :to="{name: 'search'}" tag="a"><i class="el-icon-search"></i>搜索</router-link></li>
                 <li><router-link :to="{name: 'categories'}" tag="a"><i class="iconfont iconshuben"></i>文章分类</router-link></li>
                 <!-- <li>
                     <router-link to="/notes" tag="a"><i class="iconfont iconbi"></i>学习笔记</router-link>
@@ -43,7 +44,7 @@
             <a href="/" class="logo">
                 <img src="~@/assets/img/logo.png" alt=""><span>夏叶博客</span>
             </a>
-            <i class="iconfont iconfangdajing"></i>
+            <router-link tag="i" to="/search" class="iconfont iconfangdajing"></router-link>
         </div>
 
         <!-- Mobile Menu -->
@@ -75,6 +76,7 @@
                 </div>
                 <ul class="menu" @click="mobile_menu = false">
                     <router-link tag="li" to="/"><i class="iconfont iconfangzi"></i>首页</router-link>
+                    <router-link tag="li" to="/search"><i class="iconfont iconfangdajing"></i>搜索</router-link>
                     <router-link tag="li" to="/categories"><i class="iconfont iconshuben"></i>文章分类</router-link>
                     <router-link tag="li" to="/author"><i class="iconfont iconzuozhe"></i>关于我</router-link>
                 </ul>

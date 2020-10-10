@@ -81,14 +81,7 @@ export default {
                 page_count: on_page_count,
                 article_tags: this.article
             })
-            this.changeArticleShow()
-        },
-        changeArticleShow () {
             this.list = this.article_list.data
-            this.list.forEach(item => {
-                item.router = `/article/${ item.id }`
-                item.update_time = item.update_time.substr(0,10)
-            })
         }
     }
 }

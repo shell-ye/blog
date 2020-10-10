@@ -4,7 +4,7 @@
 		<keep-alive>
 			<router-view></router-view>
 		</keep-alive>
-		<Footer v-show="nav_foot_show"></Footer>
+		<Footer v-show="nav_foot_show && foot_show"></Footer>
 	</main>
 </template>
 
@@ -23,7 +23,8 @@ export default {
 	},
 	data () {
 		return {
-			nav_foot_show: true
+			nav_foot_show: true,
+			foot_show: true,
 		}
 	},
 	async mounted () {
@@ -45,6 +46,11 @@ export default {
 				this.nav_foot_show = false
 			} else {
 				this.nav_foot_show = true
+			}
+			if ( this.$route.name == 'search' ) {
+				this.foot_show = false
+			} else {
+				this.foot_show = true
 			}
 		},
 		checkMobile () {
