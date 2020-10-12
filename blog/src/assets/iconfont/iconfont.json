@@ -6,6 +6,27 @@
   "description": "个人博客",
   "glyphs": [
     {
+      "icon_id": "5798597",
+      "name": "退出",
+      "font_class": "tuichu1",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
+      "icon_id": "2369005",
+      "name": "安全",
+      "font_class": "anquan",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "2065210",
+      "name": "锁",
+      "font_class": "suo",
+      "unicode": "e751",
+      "unicode_decimal": 59217
+    },
+    {
       "icon_id": "3776242",
       "name": "放大镜",
       "font_class": "fangdajing",

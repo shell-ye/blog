@@ -42,7 +42,7 @@ export default {
 	},
 	methods: {
 		changeShow () {
-			if ( this.$route.name == 'login' || window.location.href.indexOf('/user') != -1 ) {
+			if ( this.$route.name == 'login' || window.location.href.indexOf('/user') != -1 || this.$route.name == 'mobileLogin' || this.$route.name == 'mobileRegister' ) {
 				this.nav_foot_show = false
 			} else {
 				this.nav_foot_show = true

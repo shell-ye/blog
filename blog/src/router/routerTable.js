@@ -25,6 +25,13 @@ const Categories = () => import(/* webpackChunkName: "group-foo" */ '../views/ca
 // search
 const Search = () => import(/* webpackChunkName: "group-foo" */ '../views/Search/index.vue')
 
+// mobile
+// login
+const MobileLogin = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/Login/index.vue')
+// register
+const MobileRegister = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/Register/index.vue')
+
+
 const routeTable = [
     { path: '/', redirect: '/index'},
     { path: '/index', component: Index, name: 'index'},
@@ -41,7 +48,11 @@ const routeTable = [
     { path: '/notes', component: Notes, name: 'notes'},
     { path: '/author', component: Author, name: 'author'},
     { path: '/categories', component: Categories, name: 'categories'},
-    { path: '/search', component: Search, name: 'search'}
+    { path: '/search', component: Search, name: 'search'},
+
+    // mobile
+    { path: '/mobile/login', component: MobileLogin, name: 'mobileLogin'},
+    { path: '/mobile/register', component: MobileRegister, name: 'mobileRegister'}
 ]
 
 // 导出路由表

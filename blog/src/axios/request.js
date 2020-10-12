@@ -106,7 +106,11 @@ const request = ({
           if ( result.data.code == 200 ) {
             store.commit('setToken', result.data.data)
             setCookie('token', result.data.data)
-            window.location.href = '/#/login'
+            if ( !store.state.webside.isMobile ) {
+              window.location.href = '/#/login'
+            } else {
+              window.location.href = '/#/mobile/login'
+            }
           }
         }
       }

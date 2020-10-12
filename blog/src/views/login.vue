@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { sendEmail,user_register,user_login } from '@/axios/user'
+import { sendEmail, user_register, user_login } from '@/axios/user'
 export default {
     name: 'login',
     data () {
@@ -82,7 +82,7 @@ export default {
                     message: '请将信息输入完整'
                 })
             } else {
-                let result = await user_register( this.email,this.emailms,this.password )
+                let result = await user_register( this.email, this.emailms, this.password )
                 if ( result.data.code == 200 ) {
                     this.$message({
                         type: 'success',
@@ -99,7 +99,7 @@ export default {
                     message: '请将信息输入完整'
                 })
             } else {
-                let result = await user_login( this.email,this.password )
+                let result = await user_login( this.email, this.password )
                 if ( result.data.code == 200 ) {
                     this.$message({
                         type: 'success',

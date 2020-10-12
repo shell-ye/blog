@@ -75,10 +75,13 @@
 					</div>
                 </div>
                 <ul class="menu" @click="mobile_menu = false">
+                    <router-link v-if="this.userData && this.userData.email" tag="li" to="/user/center"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link>
                     <router-link tag="li" to="/"><i class="iconfont iconfangzi"></i>首页</router-link>
                     <router-link tag="li" to="/search"><i class="iconfont iconfangdajing"></i>搜索</router-link>
                     <router-link tag="li" to="/categories"><i class="iconfont iconshuben"></i>文章分类</router-link>
                     <router-link tag="li" to="/author"><i class="iconfont iconzuozhe"></i>关于我</router-link>
+                    <router-link  v-if="!this.userData || !this.userData.email" tag="li" to="/mobile/login"><i class="iconfont iconzuozhe-"></i>登录</router-link>
+                    <li v-if="this.userData && this.userData.email" tag="li" @click="logout"><i class="iconfont icontuichu1"></i>退出</li>
                 </ul>
             </div>
         </el-drawer>
@@ -322,6 +325,12 @@ $height: 50px;
                 margin-right: 10px;
                 font-size: 20px;
                 align-items: center;
+            }
+            img {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                margin-right: 6px;
             }
         }
     }
