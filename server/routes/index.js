@@ -1,6 +1,23 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../mysql');
+const { token_verification, checkAdmin } = require("./../middleware/index")
+const multer  = require('multer');
+
+let storage = multer.diskStorage({
+  destination (req, file, cb) {
+    cb(null, './public/images/friendLinkImg')
+  },
+  filename (req, file, cb) {
+    let name = file.originalname.split('.')[0]
+    let ext = file.originalname.split('.')[1]
+    req.session.friend_img_name = name + '.' + ext
+    cb(null, `${ name }.${ ext }`)
+  }
+})
+let upload = multer({
+  storage
+})
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -70,6 +87,40 @@ router.get('/friend/links', async (req, res) => {
     return
   })
   res.send({code: 200, data})
+})
+
+// 添加友情链接
+router.post('/friend/add', token_verification, checkAdmin, async (req, res) => {
+  const { classes, name, remarks, href } = req.body
+  if ( !classes || !name || !remarks || !href ) {
+    res.send({code: 0, msg: '缺少参数'})
+    return
+  }
+  await db.insert('friend_links').column('class', classes).column('name', name).column('remarks', remarks).column('href', href).column('head_img', req.session.friend_img_name).execute().catch(err => {
+    console.log(err)
+    res.send({code: 0, msg: '系统繁忙'})
+    return
+  })
+  res.send({code: 200})
+})
+
+// 添加友情链接图片
+router.post('/friend/add/head', checkAdmin, upload.single('head_img'), (req, res) => {
+  let name = req.file.originalname.split('.')[0]
+  let ext = req.file.originalname.split('.')[1]
+  req.session.friend_img_name = name + '.' + ext
+  res.send({code: 200})
+})
+
+// 删除友链
+router.get('/friend/del', checkAdmin, async (req, res) => {
+  const { id } = req.query
+  await db.delete('friend_links').where('id', id).execute().catch(err => {
+    console.log(err)
+    res.send({code: 0, msg: '系统繁忙'})
+    return
+  })
+  res.send({code: 200})
 })
 
 module.exports = router;

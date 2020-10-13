@@ -1,4 +1,4 @@
-import { init } from '@/axios/web'
+import { init, friendLinks } from '@/axios/web'
 
 const state = () => ({
     token: '',
@@ -19,7 +19,8 @@ const state = () => ({
             Git: 0,
             Windows: 0
         }
-    }
+    },
+    friend_links: []
 })
 
 const mutations = {
@@ -39,6 +40,9 @@ const mutations = {
     },
     changeIsMobile ( state, data ) {
         state.isMobile = data
+    },
+    setFriendLinks ( state, data ) {
+        state.friend_links = data
     }
 }
 
@@ -54,6 +58,12 @@ const actions = {
         let result = await init()
         if ( result.data.code == 200 ) {
             store.commit( 'setWebsideInfo', result.data.data )
+        }
+    },
+    async getFriendLinks ( store ) {
+        let result = await friendLinks()
+        if ( result.data.code == 200 ) {
+            store.commit( 'setFriendLinks', result.data.data )
         }
     }
 }

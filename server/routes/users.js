@@ -5,7 +5,6 @@ const { sandEmail } = require('./../utils/email');
 const multer  = require('multer')
 const { token_verification } = require("./../middleware/index")
 const { createToken } = require('./../utils/jwt');
-const email = require('./../utils/email');
 
 let storage = multer.diskStorage({
   destination (req, file, cb) {

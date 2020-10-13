@@ -18,15 +18,11 @@
 <script>
 import Links from '@/components/Links'
 import HeadBackground from '@/components/article/HeadBackground'
-import { friendLinks } from '@/axios/web'
+import { mapState } from 'vuex'
 export default {
     name: 'Friends',
     data () {
         return {
-            // links: [
-            //     tool: 
-            //     { href: '###', name: 'xiaye', remarks: 'today is a nice day', head_img: 'xxx' }
-            // ],
             links: {
                 technology: {name: '技术博客', data: [{ href: '###', name: 'xiaye', remarks: 'today is a nice day', head_img: 'xxx' }]},
                 friend: {name: '朋友的博客', data: [{ href: '###', name: 'xiaye', remarks: 'today is a nice day', head_img: 'xxx' }]},
@@ -36,15 +32,15 @@ export default {
         }
     },
     async activated () {
-        let result = await friendLinks()
-        if ( result.data.code = 200 ) {
+        if ( !this.friend_links.length ) {
+            await this.$store.dispatch('webside/getFriendLinks')
             this.links = {
                 technology: {name: '技术博客', data: []},
                 friend: {name: '朋友的博客', data: []},
                 beautiful: {name: '漂亮的博客', data: []},
                 tool: {name: '工具类', data: []}
             }
-            result.data.data.forEach(item => {
+            this.friend_links.forEach(item => {
                 if ( item.class == 'technology' ) {
                     this.links.technology.data.push( item )
                 } else if ( item.class == 'friend' ) {
@@ -59,6 +55,11 @@ export default {
     },
     components: {
         HeadBackground, Links
+    },
+    computed: {
+        ...mapState({
+            'friend_links': state => state.webside.friend_links
+        })
     }
 }
 </script>

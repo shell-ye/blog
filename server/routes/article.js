@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 const db = require('../mysql')
 const { Timestamp_To_YYYY_MM_DD_HH_MM_SS } = require('./../utils/time')
-const { token_verification } = require('./../middleware/index')
+const { token_verification, checkAdmin } = require('./../middleware/index')
 
-router.post('/add', token_verification, async (req, res) => {
+router.post('/add', token_verification, checkAdmin, async (req, res) => {
     const { title, article_img, article_tags, skill_tag, content, html_content } = req.body
     if ( !title || !article_img || !article_tags || !skill_tag || !content || !html_content ) { return res.send({ code: '000020', msg: '缺少参数'}) }
     let start_time = Timestamp_To_YYYY_MM_DD_HH_MM_SS( new Date() )
@@ -71,7 +71,7 @@ router.get('/list', async (req, res) => {
     }
 })
 
-router.get('/del', token_verification, (req, res) => {
+router.get('/del', token_verification, checkAdmin, (req, res) => {
     const { id } = req.query
     if ( !id ) { return res.send({ code: '000020', msg: '缺少参数'})}
     db.delete('article').where('id', id).execute().catch(err => {
@@ -98,7 +98,7 @@ router.get('/search', async (req, res) => {
     }
 })
 
-router.post('/update', token_verification, async (req, res) => {
+router.post('/update', token_verification, checkAdmin, async (req, res) => {
     const { id, title, article_img, article_tags, skill_tag, content, html_content } = req.body
     if ( !id,!title || !article_tags || !skill_tag || !content || !html_content ) { return res.send({ code: '000020', msg: '缺少参数'}) }
     let update_time = Timestamp_To_YYYY_MM_DD_HH_MM_SS( new Date() )

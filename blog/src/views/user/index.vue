@@ -11,6 +11,7 @@
 				<ul>
 					<router-link to="/user/center" tag="li" active-class="active">账号中心</router-link>
 					<router-link v-if="userData && userData.admin && userData.admin == '1'" to="/user/article" tag="li" active-class="active">文章管理</router-link>
+					<router-link v-if="userData && userData.admin && userData.admin == '1'" to="/user/webside/manage" tag="li" active-class="active">网站管理</router-link>
 					<router-link to="/" tag="li">退出</router-link>
 				</ul>
 			</section>
