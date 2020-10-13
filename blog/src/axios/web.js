@@ -5,3 +5,9 @@ export const init = () => {
         url: '/init'
     })
 }
+
+export const friendLinks = () => {
+    return request({
+        url: '/friend/links'
+    })
+}

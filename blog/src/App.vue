@@ -1,9 +1,11 @@
 <template>
 	<main id="app">
-		<Nav v-show="nav_foot_show"></Nav>
-		<keep-alive>
-			<router-view></router-view>
-		</keep-alive>
+		<Nav v-show="nav_foot_show"></Nav>		
+		<!-- <transition name="fade"> -->
+			<keep-alive>
+				<router-view></router-view>
+			</keep-alive>
+		<!-- </transition> -->
 		<Footer v-show="nav_foot_show && foot_show"></Footer>
 	</main>
 </template>
@@ -42,12 +44,12 @@ export default {
 	},
 	methods: {
 		changeShow () {
-			if ( this.$route.name == 'login' || window.location.href.indexOf('/user') != -1 || this.$route.name == 'mobileLogin' || this.$route.name == 'mobileRegister' ) {
+			if ( this.$route.name == 'login' || window.location.href.indexOf('#/user') != -1 || this.$route.name == 'mobileLogin' || this.$route.name == 'mobileRegister' ) {
 				this.nav_foot_show = false
 			} else {
 				this.nav_foot_show = true
 			}
-			if ( this.$route.name == 'search' ) {
+			if ( this.$route.name == 'search' || window.location.href.indexOf('#/mobile/user') != -1  ) {
 				this.foot_show = false
 			} else {
 				this.foot_show = true
@@ -65,5 +67,12 @@ export default {
 </script>
 
 <style lang="scss">
-
+.fade-enter-active, .fade-leave-avtive {
+	transform: translateY(0px);
+    transition: 1s
+}
+.fade-enter, .fade-leave-to {
+	transform: translateY(20px);
+    opacity: 0
+}
 </style>

@@ -9,7 +9,7 @@ const email = require('./../utils/email');
 
 let storage = multer.diskStorage({
   destination (req, file, cb) {
-    cb(null, './public/images/')
+    cb(null, './public/images/userHeadImg')
   },
   filename (req, file, cb) {
     let exts = file.originalname.split('.')
@@ -127,7 +127,7 @@ router.post('/upload/heads', upload.single('head_img'), async (req, res) => {
   if ( !type ) { res.send({ code: '000015', msg: '图片格式不对'})}
   if ( req.file.size / 1024 > 500 ) { return res.send({ code: '000014', msg: '图片不能大于 500kb'}) }
   // 修改图片
-  let result = await db.update('user').column('head_img', `/images/${ req.session.email }.${ req.file.filename.split('.')[exts.length - 1] }`).where('email', req.session.email).execute().catch(err => {
+  let result = await db.update('user').column('head_img', `/${ req.session.email }.${ req.file.filename.split('.')[exts.length - 1] }`).where('email', req.session.email).execute().catch(err => {
     console.log( err )
     res.send({code: 0, msg: '系统繁忙'})
     return

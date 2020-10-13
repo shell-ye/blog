@@ -68,7 +68,7 @@
 <script>
 import { mapState } from 'vuex'
 import { article_user_like } from '@/axios/article'
-import { upload_head_img,update_user_info } from '@/axios/user'
+import { upload_head_img, update_user_info } from '@/axios/user'
 export default {
     name: 'usercenter',
     data () {
@@ -130,7 +130,7 @@ export default {
         this.linkqq = `http://wpa.qq.com/msgrd?v=3&uin=${ this.user.qq }&site=qq&menu=yes`
       },
       async likeList () {
-        let result = await article_user_like( 1,this.userData.id )
+        let result = await article_user_like( 1, this.userData.id )
         if ( result.data.code == 200 ) {
           this.likes = result.data.data
         }

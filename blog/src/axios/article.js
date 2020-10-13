@@ -92,9 +92,9 @@ export const article_like = ( type,article_id,bool,user_id ) => {
     })
 }
 
-export const article_user_like = ( type,user_id,article_id ) => {
+export const article_user_like = ( type, user_id, article_id ) => {
     // type: 1-查询喜欢列表  2-查询单个
-    let p = type == 1 ? { token,type,user_id } : { token,type,user_id,article_id }
+    let p = type == 1 ? { token, type, user_id } : { token, type, user_id, article_id }
     return request({
         url: '/article/user-like',
         params: p

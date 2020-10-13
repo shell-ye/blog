@@ -32,6 +32,7 @@
                         </p>
                     </div>
                 </li> -->
+                <li><router-link :to="{name: 'friends'}" tag="a"><i class="iconfont iconlianjie1"></i>友情链接</router-link></li>
                 <li><router-link :to="{name: 'author'}" tag="a"><i class="iconfont iconzuozhe"></i>关于我</router-link></li>
                 <li v-if="!this.userData || !this.userData.email"><router-link to="/login" tag="a"><i class="iconfont iconzuozhe-"></i>登录</router-link></li>
                 <li v-if="this.userData && this.userData.email" class="user"><router-link to="/user/center" tag="a"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link><a @click="logout">退出</a></li>
@@ -39,10 +40,12 @@
         </div>
 
         <!-- Mobile -->
-        <div class="mobile" v-if="isMobile">
+        <div class="mobile" :class="{fill: mobile_user}" v-if="isMobile">
             <i class="iconfont iconcaidan-" @click="mobile_menu = true"></i>
             <a href="/" class="logo">
-                <img src="~@/assets/img/logo.png" alt=""><span>夏叶博客</span>
+                <img v-if="!mobile_user" src="~@/assets/img/logo.png" alt="">
+                <img v-if="mobile_user" src="~@/assets/img/color_logo.png" alt="">
+                <span>夏叶博客</span>
             </a>
             <router-link tag="i" to="/search" class="iconfont iconfangdajing"></router-link>
         </div>
@@ -74,13 +77,23 @@
 						</p>
 					</div>
                 </div>
-                <ul class="menu" @click="mobile_menu = false">
-                    <router-link v-if="this.userData && this.userData.email" tag="li" to="/user/center"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link>
+                <!-- 主菜单 -->
+                <ul class="menu" @click="mobile_menu = false" v-if="!mobile_user">
+                    <router-link v-if="this.userData && this.userData.email" tag="li" to="/mobile/user/center"><img :src="userData.head_img" alt=""><span>{{ userData.name }}</span></router-link>
                     <router-link tag="li" to="/"><i class="iconfont iconfangzi"></i>首页</router-link>
                     <router-link tag="li" to="/search"><i class="iconfont iconfangdajing"></i>搜索</router-link>
                     <router-link tag="li" to="/categories"><i class="iconfont iconshuben"></i>文章分类</router-link>
+                    <router-link tag="li" to="/friends"><i class="iconfont iconlianjie1"></i>友情链接</router-link>
                     <router-link tag="li" to="/author"><i class="iconfont iconzuozhe"></i>关于我</router-link>
                     <router-link  v-if="!this.userData || !this.userData.email" tag="li" to="/mobile/login"><i class="iconfont iconzuozhe-"></i>登录</router-link>
+                    <li v-if="this.userData && this.userData.email" tag="li" @click="logout"><i class="iconfont icontuichu1"></i>退出</li>
+                </ul>
+
+                <!-- 会员中心菜单 -->
+                <ul class="menu" @click="mobile_menu = false" v-if="mobile_user">
+                    <router-link tag="li" to="/"><i class="iconfont iconfangzi"></i>首页</router-link>
+                    <router-link tag="li" to="/mobile/user/center"><i class="iconfont iconzuozhe-"></i>个人信息</router-link>
+                    <router-link tag="li" to="/mobile/user/likes"><i class="iconfont iconxinaixin" style="font-size: 16px; margin-right: 4px;"></i>我点赞的</router-link>
                     <li v-if="this.userData && this.userData.email" tag="li" @click="logout"><i class="iconfont icontuichu1"></i>退出</li>
                 </ul>
             </div>
@@ -96,8 +109,14 @@ export default {
     name: 'navigation',
     data () {
         return {
+            // 导航阴影
             show_shadow: false,
-            mobile_menu: false
+
+            // 移动端侧栏
+            mobile_menu: false,
+
+            // 移动端会员中心
+            mobile_user: false
         }
     },
     mounted () {
@@ -111,6 +130,11 @@ export default {
             'isMobile': state => state.webside.isMobile,
             'webside': state => state.webside.webside
         })
+    },
+    watch: {
+        $route () {
+            this.mobile_user = this.$route.path.indexOf('/mobile/user') != -1
+        }
     },
     methods: {
         async logout () {
@@ -272,6 +296,13 @@ $height: 50px;
         i {
             font-size: 24px;
             color: white;
+        }
+    }
+    div.mobile.fill {
+        background: white;
+        box-shadow: 0 4px 4px rgba(0,21,41,.08);
+        * {
+            color: black!important;
         }
     }
 } 

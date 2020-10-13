@@ -5,6 +5,7 @@
         <img src="@/assets/img/categories_BG.jpg" alt="" v-if="type == 'categories'">
         <img src="@/assets/img/author_BG.jpg" alt="" v-if="type == 'author'">
         <img src="@/assets/img/article_BG.jpg" alt="" v-if="type == 'article'">
+        <img src="@/assets/img/friends_BG.jpg" alt="" v-if="type == 'friends'">
     </div>
 </template>
 

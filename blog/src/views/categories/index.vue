@@ -119,8 +119,15 @@ export default {
     section.article-list{
         margin-top: 20px;
         display: flex;
-        justify-content: center;
         flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #categories {
+        section.article-list {
+            justify-content: center;
+        }
     }
 }
 </style>

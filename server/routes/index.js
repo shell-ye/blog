@@ -62,4 +62,14 @@ router.get('/init', async (req, res) => {
   }
 })
 
+// 友情链接
+router.get('/friend/links', async (req, res) => {
+  let data = await db.select('*').from('friend_links').queryList().catch(err => {
+    console.log(err)
+    res.send({code: 0, msg: '系统繁忙'})
+    return
+  })
+  res.send({code: 200, data})
+})
+
 module.exports = router;

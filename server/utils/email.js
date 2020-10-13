@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 
 const sandEmail = async ( email,info ) => {
-// let testAccount = await nodemailer.createTestAccount();
 
   return new Promise(async (resolve, reject) => {
     //设置邮箱配置
@@ -33,12 +32,9 @@ const sandEmail = async ( email,info ) => {
         throw error
         reject(error)
       } else {
-        console.log('发送成功')
         resolve('发送成功')
       }
     });
-
-    console.log( 'info' + infos )
   })
 }
 

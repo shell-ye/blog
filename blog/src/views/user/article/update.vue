@@ -86,7 +86,6 @@ export default {
             // obj = JSON.stringify(obj)
             let result = await article_update( that.$store.state.article_id, that.title, that.article_img, JSON.stringify( obj ), that.skill_tag, that.content, that.html_content.replace(/[\n\r]/g,'<p></p>') )
             // let result = await article_update( that.$store.state.article_id, that.title, that.article_img, JSON.stringify( obj ), that.skill_tag, that.content, that.html_content )
-            console.log(that.html_content)
             if ( result.data.code == 200 ) { this.$message({message: '更新成功'}) }
         })
     },

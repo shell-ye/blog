@@ -31,7 +31,7 @@ const mutations = {
         state.userData = {}
     },
     setUserData ( state, data ) {        
-        if ( data && data.head_img ) { data.head_img = AXIOS_URL + data.head_img }
+        if ( data && data.head_img ) { data.head_img = AXIOS_URL + '/images/userHeadImg/' + data.head_img }
         state.userData = data
     },
     setWebsideInfo ( state, data ) {

@@ -118,7 +118,6 @@ export default {
 				this.article.html_content = this.article.html_content.replace('<li><br />','<li>')
 				this.article.html_content = this.article.html_content.replace('<br /></li>','</li>')
 			}
-			console.log(typeof this.article.html_content)
 			this.article_show = true
 		}
 	}

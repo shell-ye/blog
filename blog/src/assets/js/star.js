@@ -7,7 +7,6 @@ export default function ( id ) {
   function init() {
     //获取canvas
     var stars = document.getElementById(id);
-    console.log(stars)
     windowWidth = window.innerWidth; //当前的窗口的高度
     stars.width = windowWidth;
     stars.height = window.innerHeight;

@@ -1,35 +1,41 @@
 // 路由表
 const Index = () => import(/* webpackChunkName: "group-foo" */ '../views/index.vue')
-const Login = () => import(/* webpackChunkName: "group-foo" */ '../views/login.vue')
+const Login = () => import(/* webpackChunkName: "group-foo" */ '../views/Login/index.vue')
 
 // user
-const User = () => import(/* webpackChunkName: "group-foo" */ '../views/user/index.vue')
-const User_Center = () => import(/* webpackChunkName: "group-foo" */ '../views/user/center.vue')
-const User_Article = () => import(/* webpackChunkName: "group-foo" */ '../views/user/article/index.vue')
-const User_Article_manage = () => import(/* webpackChunkName: "group-foo" */ '../views/user/article/manage.vue')
-const User_Article_write = () => import(/* webpackChunkName: "group-foo" */ '../views/user/article/write.vue')
-const User_Article_update = () => import(/* webpackChunkName: "group-foo" */ '../views/user/article/update.vue')
+const User = () => import(/* webpackChunkName: "group-foo" */ '../views/User/index.vue')
+const User_Center = () => import(/* webpackChunkName: "group-foo" */ '../views/User/Center/index.vue')
+const User_Article = () => import(/* webpackChunkName: "group-foo" */ '../views/User/Article/index.vue')
+const User_Article_manage = () => import(/* webpackChunkName: "group-foo" */ '../views/User/Article/Manage.vue')
+const User_Article_write = () => import(/* webpackChunkName: "group-foo" */ '../views/User/Article/Write.vue')
+const User_Article_update = () => import(/* webpackChunkName: "group-foo" */ '../views/User/Article/Update.vue')
 
 // article 
-const Article = () => import(/* webpackChunkName: "group-foo" */ '../views/article/index.vue')
+const Article = () => import(/* webpackChunkName: "group-foo" */ '../views/Article/index.vue')
 
 // notes
-const Notes = () => import(/* webpackChunkName: "group-foo" */ '../views/notes/index.vue')
+const Notes = () => import(/* webpackChunkName: "group-foo" */ '../views/Notes/index.vue')
 
 // auther
-const Author = () => import(/* webpackChunkName: "group-foo" */ '../views/author/index.vue')
+const Author = () => import(/* webpackChunkName: "group-foo" */ '../views/Author/index.vue')
 
 // categories
-const Categories = () => import(/* webpackChunkName: "group-foo" */ '../views/categories/index.vue')
+const Categories = () => import(/* webpackChunkName: "group-foo" */ '../views/Categories/index.vue')
 
 // search
 const Search = () => import(/* webpackChunkName: "group-foo" */ '../views/Search/index.vue')
+
+// friends
+const Friends = () => import(/* webpackChunkName: "group-foo" */ '../views/Friends/index.vue')
 
 // mobile
 // login
 const MobileLogin = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/Login/index.vue')
 // register
 const MobileRegister = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/Register/index.vue')
+// user
+const MobileUserCenter = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/User/Center/index.vue')
+const MobileUserLikes = () => import(/* webpackChunkName: "group-foo" */ '../views/Mobile/User/Likes/index.vue')
 
 
 const routeTable = [
@@ -49,10 +55,14 @@ const routeTable = [
     { path: '/author', component: Author, name: 'author'},
     { path: '/categories', component: Categories, name: 'categories'},
     { path: '/search', component: Search, name: 'search'},
+    { path: '/friends', component: Friends, name: 'friends'},
 
     // mobile
     { path: '/mobile/login', component: MobileLogin, name: 'mobileLogin'},
-    { path: '/mobile/register', component: MobileRegister, name: 'mobileRegister'}
+    { path: '/mobile/register', component: MobileRegister, name: 'mobileRegister'},
+    // mobile user center
+    { path: '/mobile/user/center', name: 'mobileUserCenter', component: MobileUserCenter },
+    { path: '/mobile/user/likes', name: 'mobileUserLikes', component: MobileUserLikes }
 ]
 
 // 导出路由表
