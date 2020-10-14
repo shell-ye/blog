@@ -18,7 +18,7 @@
 			</p>
 		</div>
 		<div class="content">
-			<h2>{{ article.title }}</h2>
+			<h2 class="title">{{ article.title }}</h2>
 			<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
 			<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
 		</div>
@@ -156,32 +156,7 @@ export default {
 		.time {
 			width: 100%;
 		}
-        #note_content {
-            > * {
-                margin-bottom: 30px;
-            }
-            pre {
-                padding: 20px!important;
-                font-size: 16px;
-            }
-            > ul{
-                list-style: disc;
-                margin-left: 20px;
-                > li {
-                    > ul{
-                        list-style: circle;
-                        margin-left: 20px;
-                        > li {
-                            > ul{
-                                list-style: square;
-                                margin-left: 20px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-  	}
+	}
 }
 
 @media screen and (max-width: 1024px) {

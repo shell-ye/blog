@@ -12,7 +12,8 @@ import {
     Icon,
     Tooltip,
     Progress,
-    Drawer
+    Drawer,
+    Backtop
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -36,5 +37,6 @@ Vue.use(Icon);
 Vue.use(Tooltip);
 Vue.use(Progress);
 Vue.use(Drawer);
+Vue.use(Backtop);
 Vue.component(Button.name, Button)
 Vue.prototype.$message = Mess

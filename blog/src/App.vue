@@ -7,6 +7,7 @@
 			</keep-alive>
 		<!-- </transition> -->
 		<Footer v-show="nav_foot_show && foot_show"></Footer>
+		<el-backtop></el-backtop>
 	</main>
 </template>
 

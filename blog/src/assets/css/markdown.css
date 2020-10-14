@@ -609,7 +609,7 @@
     padding: 0.2em 0.4em;
     margin: 0;
     font-size: 85%;
-    background-color: rgba(27,31,35,0.05);
+    background-color: #ecf8ff;
     border-radius: 3px;
   }
   
@@ -710,4 +710,8 @@
 
   .markdown-body ul li ul li ul {
     list-style: square;
+  }
+
+  .markdown-body p {
+    line-height: 36px;
   }
