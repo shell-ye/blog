@@ -1,10 +1,8 @@
 import { Message } from 'element-ui'
-import { getCookie,setCookie } from '@/utils/cookie'
+import { getCookie, setCookie } from '@/utils/cookie'
 import { getToken } from './user'
 import store from '@/store'
 const baseURL = AXIOS_URL
-
-// const baseURL = AXIOS_URL
 
 import axios from 'axios'
 import NProgress from 'nprogress'
@@ -39,7 +37,9 @@ const request = ({
   url,
   method = "GET",
   params,
-  data, 
+  data = {
+    token: ''
+  }, 
   withCredentials = false, // default
   headers
 }) => {
@@ -47,7 +47,9 @@ const request = ({
   let obj = {t: '', token: getCookie('token')}
   obj.t = Date.parse(new Date());
   if ( params ) {
-    Object.assign(params,obj)
+    Object.assign(params, obj)
+  } else {
+    data.token = getCookie('token')
   }
   let result = new Promise(( resolved,rejected ) => {
     // 区别两个不同的数据请求就行  get  post 
@@ -101,10 +103,10 @@ const request = ({
           duration: 1500
         })
         if ( res.data.code == '000013' ) {
-          store.commit('logout')
+          store.commit('webside/logout')
           let result = await getToken()
           if ( result.data.code == 200 ) {
-            store.commit('setToken', result.data.data)
+            store.commit('webside/setToken', result.data.data)
             setCookie('token', result.data.data)
             if ( !store.state.webside.isMobile ) {
               window.location.href = '/#/login'

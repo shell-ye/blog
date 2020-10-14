@@ -421,9 +421,10 @@
   }
   
   .markdown-body blockquote {
-    padding: 0 1em;
+    padding: 10px 1em;
     color: #6a737d;
-    border-left: 0.25em solid #dfe2e5;
+    background-color: #ecf8ff;
+    border-left: 5px solid #50bfff!important;
   }
   
   .markdown-body blockquote>:first-child {
@@ -431,6 +432,10 @@
   }
   
   .markdown-body blockquote>:last-child {
+    margin-bottom: 0;
+  }
+
+  .markdown-body blockquote p {
     margin-bottom: 0;
   }
   

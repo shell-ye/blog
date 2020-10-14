@@ -3,9 +3,9 @@ const webpack = require('webpack')
 module.exports = {
     // productionSourceMap: false,
     publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
-    css: {
-        extract: false
-    },
+    // css: {
+    //     extract: false
+    // },
     configureWebpack: {
         plugins: [
             new webpack.DefinePlugin({

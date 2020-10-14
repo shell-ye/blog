@@ -140,7 +140,7 @@ export default {
         async logout () {
             let result = await log_out()
             if ( result.data.code == 200 ) {
-                this.$store.commit('webside/setUserData',{})
+                this.$store.commit( 'webside/setUserData', {} )
                 if ( window.location.href.indexOf('/user') != -1 ) { this.$router.push('/') }
             }
         },

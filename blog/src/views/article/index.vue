@@ -20,7 +20,7 @@
 		<div class="content">
 			<h2>{{ article.title }}</h2>
 			<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
-			<div id="note_content" class="markdown-body" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
+			<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
 		</div>
 		</section>
 	</article>
@@ -102,13 +102,13 @@ export default {
 			let pre_count = getStrCount( this.article.html_content, '<pre>' )
 			if ( this.article.article_tags.indexOf('Git') != -1 ) {
 				for ( let prop = 0; prop < pre_count; prop++ ) {
-					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-bash">')
-					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
+					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-bash">')
+					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
 				}
 				} else if ( this.article.article_tags.indexOf('Vue') != -1 || this.article.article_tags.indexOf('Nuxt') != -1 || this.article.article_tags.indexOf('Node') != -1 ) {
 				for ( let prop = 0; prop < pre_count; prop++ ) {
-					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers language-javascript">')
-					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="language-')
+					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-js">')
+					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
 				}
 				}
 			let li_count = getStrCount( this.article.html_content, '<li><br>' )
@@ -126,6 +126,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/theme.scss';
+@import './../../assets/css/hljs.css';
 #article{
 	display: flex;
 	justify-content: center;
@@ -142,8 +143,9 @@ export default {
 		.head{
 			border-bottom: none;
 			p {
+				line-height: 24px;
 				span {
-				margin-right: 10px;
+					margin-right: 10px;
 				}
 			}
 			p.class {
@@ -154,18 +156,13 @@ export default {
 		.time {
 			width: 100%;
 		}
-        #note_content{
+        #note_content {
             > * {
                 margin-bottom: 30px;
             }
-            pre{
+            pre {
                 padding: 20px!important;
                 font-size: 16px;
-            }
-            blockquote{
-                padding: 0px 20px;
-                color: #6a737d;
-                border-left: .25em solid #dfe2e5;
             }
             > ul{
                 list-style: disc;
@@ -182,9 +179,6 @@ export default {
                         }
                     }
                 }
-            }
-            p{ 
-                line-height: 24px;
             }
         }
   	}

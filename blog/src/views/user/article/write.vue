@@ -84,8 +84,8 @@ export default {
       for ( let prop in this.article_tags ) {
         obj[prop] = this.article_tags[prop]
       }
-      let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'))
-      // let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content )
+      // let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content.replace(/[\n\r]/g,'<br>'))
+      let result = await article_add( that.title,that.article_img,JSON.stringify( obj ),that.skill_tag,that.content,that.html_content )
       if ( result.data.code == 200 ) { this.$message({message: '添加成功'}) }
     })
   },

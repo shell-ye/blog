@@ -14,11 +14,9 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { user_info } from '@/axios/user'
-import { getCookie } from '@/utils/cookie'
 export default {
 	async beforeCreate () {
-		this.$store.commit('webside/setToken', getCookie('token'))
-		let result = await user_info( this.$store.state.token )
+		let result = await user_info()
 		if ( result.data.code == 200 ) {
 			this.$store.commit('webside/setUserData', result.data.data)
 		}

@@ -77,15 +77,14 @@ export default {
         }
     },
     mounted () {      
-        let that = this
         bus.$on('update_submit', async () => {
             let obj = {}
             for ( let prop in this.article_tags ) {
                 obj[prop] = this.article_tags[prop]
             }
             // obj = JSON.stringify(obj)
-            let result = await article_update( that.$store.state.article_id, that.title, that.article_img, JSON.stringify( obj ), that.skill_tag, that.content, that.html_content.replace(/[\n\r]/g,'<p></p>') )
-            // let result = await article_update( that.$store.state.article_id, that.title, that.article_img, JSON.stringify( obj ), that.skill_tag, that.content, that.html_content )
+            // let result = await article_update( this.$store.state.article_id, this.title, this.article_img, JSON.stringify( obj ), this.skill_tag, this.content, this.html_content.replace(/[\n\r]/g,'<p></p>') )
+            let result = await article_update( this.$store.state.article.article_id, this.title, this.article_img, JSON.stringify( obj ), this.skill_tag, this.content, this.html_content )
             if ( result.data.code == 200 ) { this.$message({message: '更新成功'}) }
         })
     },
@@ -93,7 +92,7 @@ export default {
         this.article_info = defaults 
         if ( this.$store.state.article.article_id ) {
             // search: 1-id
-            let result = await article_search(1,this.$store.state.article.article_id)
+            let result = await article_search( 1, this.$store.state.article.article_id )
             if ( result.data.code == 200 ) {
                 this.title = result.data.data.title
                 this.article_img = result.data.data.article_img

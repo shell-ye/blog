@@ -19,7 +19,7 @@
             <img src="@/assets/img/element_ui.jpg" :alt="article.article_img" v-if="article.article_img == 'ElementUI'">
         </router-link>
         <div class="context">
-            <router-link tag="p" :to="{path: article.router}" class="title">{{ article.title }}</router-link>
+            <router-link tag="p" :to="{path: `/article/${ article.id }`}" class="title">{{ article.title }}</router-link>
             <p class="details">
                 <span class="time" v-if="article.update_time"><i class="iconfont icontime"></i>{{ article.update_time.substr(0,10) }}</span>
                 <span class="tag"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</span>

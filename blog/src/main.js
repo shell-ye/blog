@@ -38,6 +38,7 @@ Vue.use(babel)
 
 axios.get(`${ AXIOS_URL }/user/token`).then(data => {
   setCookie('token', data.data.data)
+  store.commit('webside/setToken', data.data.data)
   new Vue({
     router,
     store,
