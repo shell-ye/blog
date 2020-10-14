@@ -699,3 +699,15 @@
   .markdown-body hr {
     border-bottom-color: #eee;
   }
+
+  .markdown-body ul {
+    list-style: disc;
+  }
+
+  .markdown-body ul li ul {
+    list-style: circle;
+  }
+
+  .markdown-body ul li ul li ul {
+    list-style: square;
+  }

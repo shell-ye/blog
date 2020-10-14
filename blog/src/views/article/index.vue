@@ -105,18 +105,18 @@ export default {
 					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-bash">')
 					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
 				}
-				} else if ( this.article.article_tags.indexOf('Vue') != -1 || this.article.article_tags.indexOf('Nuxt') != -1 || this.article.article_tags.indexOf('Node') != -1 ) {
+			} else if ( this.article.article_tags.indexOf('Vue') != -1 || this.article.article_tags.indexOf('Nuxt') != -1 || this.article.article_tags.indexOf('Node') != -1 ) {
 				for ( let prop = 0; prop < pre_count; prop++ ) {
 					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-js">')
 					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
 				}
-				}
-			let li_count = getStrCount( this.article.html_content, '<li><br>' )
+			}
+			let li_count = getStrCount( this.article.html_content, '<ul><br>' )
 			for ( let prop = 0; prop < li_count; prop++ ) {
-				this.article.html_content = this.article.html_content.replace('<li><br>','<li>')
-				this.article.html_content = this.article.html_content.replace('<br></li>','</li>')
-				this.article.html_content = this.article.html_content.replace('<li><br />','<li>')
-				this.article.html_content = this.article.html_content.replace('<br /></li>','</li>')
+				this.article.html_content = this.article.html_content.replace('<ul><br>','<ul>')
+				this.article.html_content = this.article.html_content.replace('<br></ul>','</ul>')
+				this.article.html_content = this.article.html_content.replace('<ul><br />','<ul>')
+				this.article.html_content = this.article.html_content.replace('<br /></ul>','</ul>')
 			}
 			this.article_show = true
 		}
