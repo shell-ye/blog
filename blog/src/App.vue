@@ -74,4 +74,15 @@ export default {
 	transform: translateY(20px);
     opacity: 0
 }
+
+// body {
+// 	cursor: url(~@/assets/img/cursor/arrow.png), auto;
+// }
+
+// body input {
+// 	cursor: url(~@/assets/img/cursor/beam.png) text!important;
+// }
+// body a {
+//     cursor: url(~@/assets/img/cursor/link.png), pointer!important;
+// }
 </style>

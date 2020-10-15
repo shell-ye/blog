@@ -425,6 +425,7 @@
     color: #6a737d;
     background-color: #ecf8ff;
     border-left: 5px solid #50bfff!important;
+    border-radius: 4px;
   }
   
   .markdown-body blockquote>:first-child {
