@@ -13,6 +13,7 @@ const state = () => ({
         tags_count: {
             'HTML+CSS': 0,
             Javascript: 0,
+            Scss: 0,
             Node: 0,
             Vue: 0,
             Axios: 0,

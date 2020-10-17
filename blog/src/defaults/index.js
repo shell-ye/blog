@@ -2,6 +2,7 @@ export default {
     article_tags: [
         { value: 'HTML+CSS', label: 'HTML+CSS'},
         { value: 'Javascript', label: 'Javascript'},
+        { value: 'Scss', label: 'Scss'},
         { value: 'Vue', label: 'Vue'},
         { value: 'ElementUI', label: 'ElementUI'},
         { value: 'Git', label: 'Git'},

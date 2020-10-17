@@ -54,6 +54,7 @@ router.get('/init', async (req, res) => {
   let js_num = await db.select('count(*)').from('article').where('article_tags', 'Javascript', 'like').queryValue()
   let axios_num = await db.select('count(*)').from('article').where('article_tags', 'Axios', 'like').queryValue()
   let element_ui_num = await db.select('count(*)').from('article').where('article_tags', 'ElementUI', 'like').queryValue()
+  let scss_num = await db.select('count(*)').from('article').where('article_tags', 'Scss', 'like').queryValue()
   let webInit = {
     article_count,
     article_likes_count,
@@ -63,6 +64,7 @@ router.get('/init', async (req, res) => {
     tags_count: {
       'HTML+CSS': html_num,
       Javascript: js_num,
+      Scss: scss_num,
       Node: node_num,
       Vue: vue_num,
       Axios: axios_num,

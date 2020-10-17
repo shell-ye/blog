@@ -17,6 +17,8 @@
             <img src="@/assets/img/js.jpg" :alt="article.article_img" v-if="article.article_img == 'Javascript'">
             <img src="@/assets/img/windows.jpg" :alt="article.article_img" v-if="article.article_img == 'Windows'">
             <img src="@/assets/img/element_ui.jpg" :alt="article.article_img" v-if="article.article_img == 'ElementUI'">
+            <img src="@/assets/img/scss.jpg" :alt="article.article_img" v-if="article.article_img == 'Scss'">
+            <img src="@/assets/img/less.jpg" :alt="article.article_img" v-if="article.article_img == 'Less'">
         </router-link>
         <div class="context">
             <router-link tag="p" :to="{path: `/article/${ article.id }`}" class="title">{{ article.title }}</router-link>
