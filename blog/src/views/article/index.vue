@@ -17,21 +17,24 @@
 					点赞次数 : {{ article.likes_count }}
 				</p>
 			</div>
-			<div class="content">
+			<div class="content" @click="contentClick($event)">
 				<h2 class="title">{{ article.title }}</h2>
 				<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
 				<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
 			</div>
 			<Reward></Reward>
 		</section>
+		<ImgDialog></ImgDialog>
 	</article>
 </template>
 
 <script>
+import bus from '@/bus'
 import { mapState } from 'vuex'
 import { getStrCount } from '@/utils/index'
 import { article_search,article_like,article_user_like } from '@/axios/article'
 import HeadBackground from '@/components/article/HeadBackground'
+import ImgDialog from '@/components/article/ImgDialog'
 import Reward from '@/components/Reward'
 export default {
 	data () {
@@ -58,7 +61,7 @@ export default {
 		}
 	},
 	components: {
-		HeadBackground, Reward
+		HeadBackground, Reward, ImgDialog
 	},
 	methods: {
 		async search ( id ) {
@@ -121,6 +124,11 @@ export default {
 				this.article.html_content = this.article.html_content.replace('<br /></ul>','</ul>')
 			}
 			this.article_show = true
+		},
+		contentClick ( e ) {
+			if ( e.target.nodeName == 'IMG' ) {
+				bus.$emit('showImgDialog', e.target.src)
+			}
 		}
 	}
 }
