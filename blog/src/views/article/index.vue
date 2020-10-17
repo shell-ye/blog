@@ -2,26 +2,27 @@
 	<article id="article" ref="article" v-if="article && article.title">
 		<HeadBackground text="文章阅读" type="article"></HeadBackground>
 		<section class="container note-content white-card">
-		<div class="head">
-			<p v-if="tags && tags.length">
-				<router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item }}</router-link>
-			</p>
-			<p class="class"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</p>
-		</div>
-		<div class="time">
-			<p class="start"><i class="iconfont iconriqi"></i>发布时间：{{ article.publish_time | timeDate }}</p>
-			<p class="new"><i class="iconfont iconriqi"></i>更新时间：{{ article.update_time | timeDate }}</p>
-			<p class="likes">
-				<i class="iconfont iconLike-selected" :class="{liked: !likedBool}" @click="likedHandler"></i>
-				<i class="iconfont iconxinaixin" :class="{liked: likedBool}" @click="likedHandler"></i>
-				点赞次数 : {{ article.likes_count }}
-			</p>
-		</div>
-		<div class="content">
-			<h2 class="title">{{ article.title }}</h2>
-			<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
-			<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
-		</div>
+			<div class="head">
+				<p v-if="tags && tags.length">
+					<router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item }}</router-link>
+				</p>
+				<p class="class"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</p>
+			</div>
+			<div class="time">
+				<p class="start"><i class="iconfont iconriqi"></i>发布时间：{{ article.publish_time | timeDate }}</p>
+				<p class="new"><i class="iconfont iconriqi"></i>更新时间：{{ article.update_time | timeDate }}</p>
+				<p class="likes">
+					<i class="iconfont iconLike-selected" :class="{liked: !likedBool}" @click="likedHandler"></i>
+					<i class="iconfont iconxinaixin" :class="{liked: likedBool}" @click="likedHandler"></i>
+					点赞次数 : {{ article.likes_count }}
+				</p>
+			</div>
+			<div class="content">
+				<h2 class="title">{{ article.title }}</h2>
+				<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
+				<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
+			</div>
+			<Reward></Reward>
 		</section>
 	</article>
 </template>
@@ -31,14 +32,15 @@ import { mapState } from 'vuex'
 import { getStrCount } from '@/utils/index'
 import { article_search,article_like,article_user_like } from '@/axios/article'
 import HeadBackground from '@/components/article/HeadBackground'
+import Reward from '@/components/Reward'
 export default {
 	data () {
 		return {
-		article_show: false,
-		article: {},
-		tags: [],
-		catalog: {},
-		likedBool: false
+			article_show: false,
+			article: {},
+			tags: [],
+			catalog: {},
+			likedBool: false
 		}
 	},
 	async activated () {
@@ -52,11 +54,11 @@ export default {
 	},
 	watch: {
 		$route () {
-		this.article_show = false
+			this.article_show = false
 		}
 	},
 	components: {
-		HeadBackground
+		HeadBackground, Reward
 	},
 	methods: {
 		async search ( id ) {

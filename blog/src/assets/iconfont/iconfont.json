@@ -6,6 +6,20 @@
   "description": "个人博客",
   "glyphs": [
     {
+      "icon_id": "9813170",
+      "name": "微信 支付",
+      "font_class": "weixinzhifu",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "9829177",
+      "name": "支付宝支付",
+      "font_class": "zhifubaozhifu",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
       "icon_id": "10460926",
       "name": "链接",
       "font_class": "lianjie1",
