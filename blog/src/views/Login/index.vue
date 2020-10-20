@@ -170,7 +170,7 @@ export default {
                 margin: 0;
                 line-height: 40px;
                 left: 206px;
-                top: 270px;
+                top: 257px;
             }
         }
 

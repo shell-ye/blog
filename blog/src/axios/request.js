@@ -13,8 +13,7 @@ NProgress.configure({showSpinner: false});
 
 const instance = axios.create({  // 创建一个axios实例
   baseURL, 
-  timeout: 5000,
-  withCredentials: true // 携带 cookie 信息
+  timeout: 5000
 });
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -40,7 +39,7 @@ const request = ({
   data = {
     token: ''
   }, 
-  withCredentials = false, // default
+  withCredentials = true, // default
   headers
 }) => {
   // 解决 IE 的 GET 请求来自缓存问题: 添加一个时间戳

@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieSession({
   name: 'session_id',
   keys: ['123456'],
-  secret: 'keyboard cat', 
+  secret: 'keyboard cat',
 
   // Cookie Options
   maxAge: 60 * 60 * 60 * 1000
@@ -31,10 +31,12 @@ app.use(cookieSession({
 
 // 处理跨域请求
 app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
   res.header('Access-Control-Allow-Headers', 'Content-type');
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS,PATCH");
   res.header('Access-Control-Max-Age',1728000);// 预请求缓存20天
+  res.header("Access-Control-Allow-Credentials",true);
+  res.header("Content-Type", "application/json;charset=utf-8");
   next();  
 });
 
