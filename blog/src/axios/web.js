@@ -1,6 +1,4 @@
 import request from './request'
-import { getCookie } from '@/utils/cookie'
-let token = getCookie('token')
 
 // 初始数据
 export const init = () => {
@@ -22,7 +20,6 @@ export const uploadFriendLink = ( classes, name, remarks, href ) => {
         url: '/friend/add',
         method: 'POST',
         data: {
-            token,
             classes, 
             name, 
             remarks, 
@@ -45,7 +42,6 @@ export const delFriendLink = ( id ) => {
     return request({
         url: '/friend/del',
         params: {
-            token,
             id
         }
     })
@@ -57,7 +53,6 @@ export const changeFriendLink = ( classes, name, remarks, href ) => {
         url: '/friend/change',
         method: 'POST',
         data: {
-            token,
             classes, 
             name, 
             remarks, 

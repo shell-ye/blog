@@ -42,7 +42,7 @@ router.post('/register/email', async (req, res) => {
       return
     } 
     let random_code = parseInt( Math.random() * 1000000 ).toString()
-    sandEmail( req.body.email,random_code ).then( data => {
+    sandEmail( req.body.email, random_code ).then( data => {
       req.session.email = req.body.email
       req.session.code = random_code
       res.send({ code: 200, data })
@@ -99,7 +99,6 @@ router.post('/login', token_verification, async (req, res) => {
 
 // 用户信息
 router.get('/info', async (req, res) => {
-  if ( !req.query.token || req.query.token != req.session.token ) { return res.send({ code: 200, data: {}}) }
   let data = await db.select('*').from('user').where('email', req.session.email).queryRow().catch(err => {
     console.log( err )
     res.send({code: 0, msg: '系统繁忙'})

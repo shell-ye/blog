@@ -1,6 +1,4 @@
 import request from './request'
-import { getCookie } from '@/utils/cookie'
-let token = getCookie('token')
 
 export const getToken = () => {
     return request({
@@ -35,7 +33,6 @@ export const user_login = ( email,password ) => {
         url: '/user/login',
         method: 'POST',
         data: {
-            token,
             email,
             password
         }
@@ -44,19 +41,13 @@ export const user_login = ( email,password ) => {
 
 export const user_info = () => {
     return request({
-        url: '/user/info',
-        params: {
-            token
-        }
+        url: '/user/info'
     })
 }
 
 export const log_out = () => {
     return request({
-        url: '/user/logout',
-        params: {
-            token
-        }
+        url: '/user/logout'
     })
 }
 
@@ -73,7 +64,6 @@ export const update_user_info = ( name,saying,qq,git,weibo,bilibili ) => {
         url: '/user/update',
         method: 'POST',
         data: {
-            token,
             name,
             saying,
             qq,

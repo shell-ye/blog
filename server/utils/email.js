@@ -29,7 +29,6 @@ const sandEmail = async ( email,info ) => {
     let infos = await transporter.sendMail(mailOptions,(error,info)=>{
       if(error) {
         console.log( error )
-        throw error
         reject(error)
       } else {
         resolve('发送成功')
