@@ -19,6 +19,7 @@
             <img src="@/assets/img/element_ui.jpg" :alt="article.article_img" v-if="article.article_img == 'ElementUI'">
             <img src="@/assets/img/scss.jpg" :alt="article.article_img" v-if="article.article_img == 'Scss'">
             <img src="@/assets/img/less.jpg" :alt="article.article_img" v-if="article.article_img == 'Less'">
+            <img src="@/assets/img/weixinMiniProgram.jpg" :alt="article.article_img" v-if="article.article_img == 'WeiXinMiniProgram'">
         </router-link>
         <div class="context">
             <router-link tag="p" :to="{path: `/article/${ article.id }`}" class="title">{{ article.title }}</router-link>

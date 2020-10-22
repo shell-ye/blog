@@ -55,6 +55,7 @@ router.get('/init', async (req, res) => {
   let axios_num = await db.select('count(*)').from('article').where('article_tags', 'Axios', 'like').queryValue()
   let element_ui_num = await db.select('count(*)').from('article').where('article_tags', 'ElementUI', 'like').queryValue()
   let scss_num = await db.select('count(*)').from('article').where('article_tags', 'Scss', 'like').queryValue()
+  let weixinminiprogram_num = await db.select('count(*)').from('article').where('article_tags', 'WeiXinMiniProgram', 'like').queryValue()
   let webInit = {
     article_count,
     article_likes_count,
@@ -70,7 +71,8 @@ router.get('/init', async (req, res) => {
       Axios: axios_num,
       Git: git_num,
       Windows: windows_num,
-      ElementUI: element_ui_num
+      ElementUI: element_ui_num,
+      WeiXinMiniProgram: weixinminiprogram_num
     }
   }
   res.send({code: 200, data: webInit})

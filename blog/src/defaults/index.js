@@ -8,7 +8,9 @@ export default {
         { value: 'Git', label: 'Git'},
         { value: 'Node', label: 'Node'},
         { value: 'Axios', label: 'Axios'},
-        { value: 'Windows', label: 'Windows'}
+        { value: 'Windows', label: 'Windows'},
+        { value: 'WeiXinMiniProgram', label: 'WeiXinMiniProgram'},
+        { value: 'MiniProgram', label: 'MiniProgram'}
     ],
     skill_tags: [
         { value: '基本技能', label: '基本技能'},

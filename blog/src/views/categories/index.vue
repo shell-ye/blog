@@ -4,15 +4,14 @@
         <section class="white-card container animate__animated animate__slideInUp categories">
             <p class="title"><i class="iconfont iconshuben"></i>文章分类</p>
             <div class="tags">
-                <!-- <span v-for="(item, index) in article_tags" :key="index" class="tags-2" :class="{select_article: article == item.value}" @click="article = item.value">{{ item.value }}</span> -->
-                <span v-for="(item, index) in tags_count" :key="index" class="tags-2" :class="{select_article: article == index}" @click="article = index">
-                    {{ index }} &nbsp;&nbsp;&nbsp;&nbsp; {{ item }}
+                <span v-for="(item, index) in tags_count" :key="index" class="tags-2" :class="{select_article: article == index}" :style="{background: colorList[Math.random().toString().substring(4, 5)]}" @click="article = index">
+                    {{ index | articleTag }} &nbsp;&nbsp;&nbsp;&nbsp; {{ item }}
                 </span>
             </div>
         </section>
         <section class="article-list container animate__animated animate__slideInUp">
             <ImgCard v-for="(item, index) in list" :key="index" :article="item" shape="square"></ImgCard>
-            <PagingPage v-if="article_list.data && article_list.data.length" :max_pages="Math.ceil(article_list.pages_info.count / 4)" @increase="page++" @decrease="page--"></PagingPage>
+            <PagingPage v-if="article_list.data && article_list.data.length" :max_pages="Math.ceil(article_list.pages_info.count / on_page_count)" @increase="page++" @decrease="page--"></PagingPage>
         </section>
   </article>
 </template>
@@ -31,9 +30,11 @@ export default {
             article: 'HTML+CSS',
             article_tags: [],
             page: 1,
+            on_page_count: 12,
             list: [
-                { router: '/article/000001', title: 'vue基础', time: '2020-07-10', class: '前端' } // 改造后的数据样板
+                { router: '/article/000001', title: 'vue基础', time: '2020-07-10', class: '前端', color: '#ccc' } // 改造后的数据样板
             ],
+            colorList: ['#F5EEF8', '#F9EBEA', '#D7BDE2', '#FEF9E7', '#D2FAC8', '#6A6226', '#1AF2F6', '#ACC156', '#9695ce', '#78808d']
         }
     },
     mounted () {
@@ -65,20 +66,20 @@ export default {
     },
     watch: {
         article () {
-            this.pages = 1
+            this.page = 1
             this.search()
         },
-        pages () {
+        page () {
             this.search()
         }
     },
     methods: {
         async search () {
-            let on_page_count = this.isMobile ? 6 : 12
+            this.on_page_count = this.isMobile ? 6 : 12
             await this.$store.dispatch('article/getArticleList', {
 				type: 2,
 				page: this.page,
-                page_count: on_page_count,
+                page_count: this.on_page_count,
                 article_tags: this.article
             })
             this.list = this.article_list.data
@@ -100,14 +101,6 @@ export default {
             margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
-            > span:nth-child(1){ background: #F5EEF8;}
-            > span:nth-child(2){ background: #F9EBEA;}
-            > span:nth-child(3){ background: #D7BDE2;}
-            > span:nth-child(4){ background: #FEF9E7;}
-            > span:nth-child(5){ background: #D2FAC8;}
-            > span:nth-child(6){ background: #6A6226;}
-            > span:nth-child(7){ background: #1AF2F6;}
-            > span:nth-child(8){ background: #ACC156;}
 
             .select_article{
                 background: linear-gradient(to bottom right,#ff5e3a 0,#ff2a68 100%)!important;

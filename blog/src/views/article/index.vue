@@ -4,7 +4,7 @@
 		<section class="container note-content white-card">
 			<div class="head">
 				<p v-if="tags && tags.length">
-					<router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item }}</router-link>
+					<router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item | articleTag }}</router-link>
 				</p>
 				<p class="class"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</p>
 			</div>

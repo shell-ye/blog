@@ -33,7 +33,7 @@
 					<p class="head"><i class="iconfont iconmulu"></i>文章分类</p>
 					<ul>
 						<li v-for="(item, index) in webside.tags_count" :key="index">
-							<router-link tag="span" :to="{path: '/categories', query: { class: index }}">{{ index }}</router-link>
+							<router-link tag="span" :to="{path: '/categories', query: { class: index }}">{{ index | articleTag }}</router-link>
 							<span>{{ item }}</span>
 						</li>
 					</ul>

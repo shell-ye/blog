@@ -11,3 +11,13 @@ Vue.filter('firstUpcase', value => {
     let result = value.substring(0, 1).toUpperCase() + value.substring(1, value.length)
     return result
 })
+
+Vue.filter('articleTag', value => {
+    if ( value == 'WeiXinMiniProgram' ) {
+        return '微信小程序'
+    } else if ( value == 'MiniProgram' ) {
+        return '小程序'
+    } else {
+        return value
+    }
+})
