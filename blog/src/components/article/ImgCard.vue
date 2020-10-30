@@ -108,6 +108,9 @@ $height: 270px;
     box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
     &:hover{
         box-shadow: 0 4px 12px 12px rgba(7,17,27,0.15);
+        .img img {
+            transform: scale(1.1);
+        }
     }
     > div{ overflow: hidden;}
     img{

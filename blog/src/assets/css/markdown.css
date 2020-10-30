@@ -295,10 +295,6 @@
     margin-bottom: 10px;
   }
   
-  .markdown-body blockquote {
-    margin: 0;
-  }
-  
   .markdown-body ul,
   .markdown-body ol {
     padding-left: 0;
@@ -328,8 +324,7 @@
   }
   
   .markdown-body pre {
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 30px 0!important;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 12px;
   }
@@ -402,12 +397,10 @@
   }
   
   .markdown-body p,
-  .markdown-body blockquote,
   .markdown-body ul,
   .markdown-body ol,
   .markdown-body dl,
-  .markdown-body table,
-  .markdown-body pre {
+  .markdown-body table {
     margin-top: 0;
     margin-bottom: 16px;
   }
@@ -426,6 +419,7 @@
     background-color: #ecf8ff;
     border-left: 5px solid #50bfff!important;
     border-radius: 4px;
+    margin: 20px 0;
   }
   
   .markdown-body blockquote>:first-child {

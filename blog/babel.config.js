@@ -13,6 +13,14 @@ module.exports = {
         "libraryName": "element-ui",
         "styleLibraryName": "theme-chalk"
       }
+    ],
+    [
+      "prismjs",
+      {
+        "languages": ["html", "css", "javascript", "php", "dart", "bash", "nginx", "sql"],
+        "plugins": ["line-numbers"],
+        "theme": "tomorrow-night"
+      }
     ]
   ]
 }

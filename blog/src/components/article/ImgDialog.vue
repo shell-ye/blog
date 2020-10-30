@@ -1,5 +1,5 @@
 <template>
-    <div class="img-dialog" v-show="img_show" :class="{show: img_show}">
+    <div class="img-dialog" :class="{show: img_show}">
         <img :src="src" alt="">
         <i class="el-icon-close" @click="img_show = false"></i>
     </div>
@@ -35,6 +35,10 @@ export default {
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, .8);
+    transition: .2s;
+    transform: scale(.2);
+    opacity: 0;
+    pointer-events: none;
     z-index: 9999999;
     img {
         max-width: 100vw;
@@ -48,5 +52,11 @@ export default {
         top: 40px;
         right: 40px;
     }
+}
+
+.img-dialog.show {
+    pointer-events: auto;
+    opacity: 1;
+    transform: scale(1);
 }
 </style>

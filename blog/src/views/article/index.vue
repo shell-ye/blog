@@ -1,14 +1,14 @@
 <template>
-	<article id="article" ref="article" v-if="article && article.title">
+	<article id="article" ref="article">
 		<HeadBackground text="文章阅读" type="article"></HeadBackground>
 		<section class="container note-content white-card">
-			<div class="head">
+			<div class="head" v-if="article && article.title">
 				<p v-if="tags && tags.length">
 					<router-link v-for="(item, index) in tags" :key="index" tag="span" :to="{ path: '/categories', query: { article_tags: item} }" class="tags-3">{{ item | articleTag }}</router-link>
 				</p>
 				<p class="class"><i class="iconfont iconmark"></i>{{ article.skill_tag }}</p>
 			</div>
-			<div class="time">
+			<div class="time" v-if="article && article.title">
 				<p class="start"><i class="iconfont iconriqi"></i>发布时间：{{ article.publish_time | timeDate }}</p>
 				<p class="new"><i class="iconfont iconriqi"></i>更新时间：{{ article.update_time | timeDate }}</p>
 				<p class="likes">
@@ -18,9 +18,9 @@
 				</p>
 			</div>
 			<div class="content" @click="contentClick($event)">
-				<h2 class="title">{{ article.title }}</h2>
+				<h2 class="title" v-if="article && article.title">{{ article.title }}</h2>
 				<!-- <div id="note_content" v-if="article && article.html_content && article_show" v-text="article.html_content"></div> -->
-				<div class="markdown-body" id="note_content" v-if="article && article.html_content && article_show" v-html="article.html_content"></div>
+				<div class="markdown-body" ref="note_content" id="note_content" v-show="article && article.html_content" v-html="article.html_content"></div>
 			</div>
 			<Reward></Reward>
 		</section>
@@ -30,6 +30,7 @@
 
 <script>
 import bus from '@/bus'
+import Prism from 'prismjs'
 import { mapState } from 'vuex'
 import { getStrCount } from '@/utils/index'
 import { article_search,article_like,article_user_like } from '@/axios/article'
@@ -85,7 +86,7 @@ export default {
 			}
 			if ( result.data.code == 200 ) {
 				if ( !this.likedBool ) {
-				this.$message({message: '成功添加喜欢'})
+					this.$message({message: '成功添加喜欢'})
 				}
 				this.article.likes_count = result.data.data
 				this.likedBool = !this.likedBool
@@ -103,27 +104,14 @@ export default {
 				}
 			}
 		},
-		changeHTMLStr () {
-			let pre_count = getStrCount( this.article.html_content, '<pre>' )
-			if ( this.article.article_tags.indexOf('Git') != -1 ) {
-				for ( let prop = 0; prop < pre_count; prop++ ) {
-					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-bash">')
-					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
-				}
-			} else if ( this.article.article_tags.indexOf('Vue') != -1 || this.article.article_tags.indexOf('Nuxt') != -1 || this.article.article_tags.indexOf('Node') != -1 ) {
-				for ( let prop = 0; prop < pre_count; prop++ ) {
-					this.article.html_content = this.article.html_content.replace('<pre>','<pre class="line-numbers lang-js">')
-					this.article.html_content = this.article.html_content.replace('<code class="lang-','<code class="lang-')
-				}
-			}
-			let li_count = getStrCount( this.article.html_content, '<ul><br>' )
-			for ( let prop = 0; prop < li_count; prop++ ) {
-				this.article.html_content = this.article.html_content.replace('<ul><br>','<ul>')
-				this.article.html_content = this.article.html_content.replace('<br></ul>','</ul>')
-				this.article.html_content = this.article.html_content.replace('<ul><br />','<ul>')
-				this.article.html_content = this.article.html_content.replace('<br /></ul>','</ul>')
-			}
-			this.article_show = true
+		async changeHTMLStr () {
+			this.article.html_content = this.article.html_content.replace(/<pre/g, '<pre class="line-numbers language-"')
+			await this.$refs.note_content
+			Prism.highlightAll()
+			let timer = setTimeout(() => {
+				Prism.highlightAll()
+				clearTimeout( timer )
+			}, 1000)
 		},
 		contentClick ( e ) {
 			if ( e.target.nodeName == 'IMG' ) {
@@ -136,7 +124,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/theme.scss';
-@import './../../assets/css/hljs.css';
+@import './../../assets/css/prism.css';
 #article{
 	display: flex;
 	justify-content: center;
@@ -165,6 +153,12 @@ export default {
 		}
 		.time {
 			width: 100%;
+		}
+		.content {
+			h2 {
+				margin-bottom: 40px;
+				font-weight: bold;
+			}
 		}
 	}
 }

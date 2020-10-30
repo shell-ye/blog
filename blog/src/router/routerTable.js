@@ -1,5 +1,5 @@
 // 路由表
-const Index = () => import(/* webpackChunkName: "group-foo" */ '../views/index.vue')
+const Index = () => import(/* webpackChunkName: "group-foo" */ '../views/Index/index.vue')
 const Login = () => import(/* webpackChunkName: "group-foo" */ '../views/Login/index.vue')
 
 // user
