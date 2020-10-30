@@ -72,7 +72,7 @@ export default {
         cursor: pointer;
         color: #888;
         font-size: 12px;
-        z-index: 2;
+        z-index: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;

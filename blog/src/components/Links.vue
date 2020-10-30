@@ -62,14 +62,13 @@ export default {
         }
         img {
             box-shadow: inset 0 0 10px #000;
-            padding: 5px;
             opacity: 1;
             transform: rotate(0deg);
             transition: all ease 1s;
             margin-top: 5px;
-            width: 65px;
-            height: 65px;
-            padding: 2px;
+            width: 60px;
+            height: 60px;
+            padding: 4px;
             border-radius: 100%;
         }
     }
@@ -104,6 +103,13 @@ export default {
         &::before {
             width: 180%;
         }
+    }
+}
+
+// IE 图片边框圆角 padding显示问题
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .link-block img { 
+        padding: 0!important;
     }
 }
 </style>

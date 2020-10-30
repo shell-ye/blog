@@ -1,5 +1,5 @@
 <template>
-    <nav id="nav" :class="{nav_shadow: show_shadow == 1}">
+    <nav id="nav" :class="{nav_shadow: show_shadow}">
         <!-- PC -->
         <div class="pc" v-if="!isMobile">
             <a href="/" class="logo">
@@ -120,8 +120,11 @@ export default {
         }
     },
     mounted () {
-        window.addEventListener('scroll',() => {
-            this.show_shadow = window.scrollY ? true : false
+        window.addEventListener('scroll', e => {
+            // window.scrollY - Chrome
+            // window.pageYOffset - IE 9 + / safari
+            // document.documentElement.scrollTop - IE 6 7 8
+            this.show_shadow = window.scrollY || window.pageYOffset || document.documentElement.scrollTop  ? true : false
         })
     },
     computed: {
@@ -157,10 +160,11 @@ export default {
 @import '@/assets/css/theme.scss';
 $height: 50px;
 #nav{
-    z-index: 1600;
+    z-index: 3;
     position: fixed;
     top: 0;
     width: 100%;
+    transition: .2s;
     div.pc {
         display: flex;
         justify-content: space-between;
@@ -367,5 +371,16 @@ $height: 50px;
     }
 }
 
-#nav.nav_shadow{ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); background: #ababab;}
+#nav.nav_shadow{ 
+    background: rgba(171, 171, 171, .3);
+    backdrop-filter: saturate(300%) blur(10px);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); 
+}
+
+// IE 不支持毛玻璃效果
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    #nav.nav_shadow{ 
+        background: rgba(171, 171, 171, .9)!important;
+    }
+}
 </style>

@@ -41,8 +41,8 @@ export default {
         this.article_tags = defaults.article_tags
     },
     activated () {
-        if ( this.$route.query && this.$route.query.class ) {
-            this.article = this.$route.query.class
+        if ( this.$route.query && this.$route.query.article_tags ) {
+            this.article = this.$route.query.article_tags
         }
         this.search()
     },
