@@ -303,7 +303,8 @@ $height: 50px;
         }
     }
     div.mobile.fill {
-        background: white;
+        // background: white;
+        background: rgba(171, 171, 171, .2)!important;
         box-shadow: 0 4px 4px rgba(0,21,41,.08);
         * {
             color: black!important;
